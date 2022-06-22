@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render
 
 # Create your views here.
@@ -28,7 +28,7 @@ class UserApiView(APIView):
         target_user_id = User.objects.get(id=obj_id).id
         if user.is_anonymous:
             return Response({"error": "로그인 후 이용해주세요"}, status=status.HTTP_400_BAD_REQUEST)
-        elif user != target_user_id:
+        elif user.id != target_user_id:
             return Response({"error": "올바르지 못한 접근입니다."}, status=status.HTTP_400_BAD_REQUEST)
 
         user_serilaizer = UserSerializer(user, data=request.data, partial=True)
@@ -50,9 +50,9 @@ class UserView(APIView):
         if not user:
             return Response({"error": "회원정보를 확인해주세요"}, status=status.HTTP_400_BAD_REQUEST)
         login(request, user)
-        return Response({"msg": "로그인 성공"})
+        return Response({"msg": "로그인 성공"}, status=status.HTTP_200_OK)
 
     # 로그아웃
     def delete(self, request):
-
-        return Response()
+        logout(request)
+        return Response({"msg": "로그아웃 성공"}, status=status.HTTP_200_OK)
