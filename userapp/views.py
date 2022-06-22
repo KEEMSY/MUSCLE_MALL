@@ -1,3 +1,4 @@
+from django.contrib.auth import authenticate, login
 from django.shortcuts import render
 
 # Create your views here.
@@ -41,3 +42,17 @@ class UserApiView(APIView):
     def delete(self, request):
         return Response({"msg": "delete method!"})
 
+
+class UserView(APIView):
+    # 로그인
+    def post(self, request):
+        user = authenticate(request, **request.data)
+        if not user:
+            return Response({"error": "회원정보를 확인해주세요"}, status=status.HTTP_400_BAD_REQUEST)
+        login(request, user)
+        return Response({"msg": "로그인 성공"})
+
+    # 로그아웃
+    def delete(self, request):
+
+        return Response()
