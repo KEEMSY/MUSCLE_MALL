@@ -1,5 +1,8 @@
 from django.urls import path
 
+from userapp import views
+
 urlpatterns =[
-    # path()
+    path('', views.UserApiView.as_view()),
+
 ]
