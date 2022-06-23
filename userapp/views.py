@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
 
 # Create your views here.
@@ -14,8 +15,13 @@ class UserApiView(APIView):
     # 사용자 정보 조회
     def get(self, request, user_id=None):
         if user_id:
-            user_serializer = UserSerializer(User.objects.get(id=user_id)).data
-            return Response(user_serializer, status=status.HTTP_200_OK)
+            try:
+                user = User.objects.get(id=user_id)
+                user_serializer = UserSerializer(user).data
+                return Response(user_serializer, status=status.HTTP_200_OK)
+            except ObjectDoesNotExist:
+                return Response({"msg": "존재하지 않는 유저입니다."})
+
         users = UserSerializer(User.objects.all(), many=True).data
         return Response(users, status=status.HTTP_200_OK)
 
