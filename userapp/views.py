@@ -12,8 +12,12 @@ from userapp.serializers import UserSerializer
 
 class UserApiView(APIView):
     # 사용자 정보 조회
-    def get(self, request):
-        return Response({"msg": "get method!"})
+    def get(self, request, user_id=None):
+        if user_id:
+            user_serializer = UserSerializer(User.objects.get(id=user_id)).data
+            return Response(user_serializer, status=status.HTTP_200_OK)
+        users = UserSerializer(User.objects.all(), many=True).data
+        return Response(users, status=status.HTTP_200_OK)
 
     # 회원가입 Done
     def post(self, request):
@@ -22,10 +26,10 @@ class UserApiView(APIView):
         user_serializer.save()
         return Response(user_serializer.data, status=status.HTTP_201_CREATED)
 
-    # 사용자 정보 수정
-    def put(self, request, obj_id):
+    # 사용자 정보 수정 Done
+    def put(self, request, user_id):
         user = request.user
-        target_user_id = User.objects.get(id=obj_id).id
+        target_user_id = User.objects.get(id=user_id).id
         if user.is_anonymous:
             return Response({"error": "로그인 후 이용해주세요"}, status=status.HTTP_400_BAD_REQUEST)
         elif user.id != target_user_id:
