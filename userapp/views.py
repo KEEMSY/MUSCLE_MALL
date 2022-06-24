@@ -12,8 +12,6 @@ from userapp.serializers import UserSerializer
 
 
 class UserApiView(APIView):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-
     # 사용자 정보 조회 Done
     def get(self, request, user_id=None):
         if user_id:
