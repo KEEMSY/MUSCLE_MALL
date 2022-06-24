@@ -1,9 +1,9 @@
 from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import render
 
 # Create your views here.
-from rest_framework import status
+from rest_framework import status, permissions
+from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -12,7 +12,9 @@ from userapp.serializers import UserSerializer
 
 
 class UserApiView(APIView):
-    # 사용자 정보 조회
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    # 사용자 정보 조회 Done
     def get(self, request, user_id=None):
         if user_id:
             try:
@@ -48,9 +50,13 @@ class UserApiView(APIView):
 
         return Response(user_serilaizer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    # 사욪자 삭제
-    def delete(self, request):
-        return Response({"msg": "delete method!"})
+    # 사용자 삭제
+    def delete(self, request, user_id):
+        user = get_object_or_404(User, id=user_id)
+        if request.user.id != user.id:
+            return Response({"msg": "잘못된 접근입니다."}, status=status.HTTP_400_BAD_REQUEST)
+        user.delete()
+        return Response({"msg": "회원탈퇴 완료"}, status=status.HTTP_200_OK)
 
 
 class UserView(APIView):
