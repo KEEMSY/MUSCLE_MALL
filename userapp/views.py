@@ -92,16 +92,15 @@ class CoachApiView(APIView):
 
     def post(self, request):
         request.data['user'] = request.user.id
-        coach_serializer = CoachSerializer(data=request.data, context={'request': request})
+        coach_serializer = CoachSerializer(data=request.data)
         coach_serializer.is_valid(raise_exception=True)
         coach_serializer.save()
         return Response(coach_serializer.data, status=status.HTTP_201_CREATED)
 
     def put(self, request, coach_id):
-        request.data['user'] = request.user.id
         try:
             coach = Coach.objects.get(id=coach_id, user=request.user)
-            coach_serializer = CoachSerializer(coach, data=request.data, partial=True, context={'request': request})
+            coach_serializer = CoachSerializer(coach, data=request.data, partial=True)
             if coach_serializer.is_valid():
                 coach_serializer.save()
                 return Response({"msg": "변경되었습니다."}, status=status.HTTP_200_OK)
