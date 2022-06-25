@@ -8,21 +8,6 @@ class CoachSerializer(serializers.ModelSerializer):
         model = Coach
         fields = ["user", "nickname", "phone_number", "kind"]
 
-        # extra_kwargs = {
-        #     "user": {'write_only': True},
-        #
-        # }
-
-    def validate(self, data):
-        request_user = self.context['request'].user
-        print(request_user)
-        print(data)
-        if request_user.id != data["user"].id:
-            raise serializers.ValidationError(
-                detail={"error": "잘못된 접근입니다."},
-            )
-        return data
-
     def update(self, instance, validated_data):
         for key, value in validated_data.items():
             setattr(instance, key, value)

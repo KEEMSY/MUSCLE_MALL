@@ -101,12 +101,11 @@ class CoachApiView(APIView):
         request.data['user'] = request.user.id
         try:
             coach = Coach.objects.get(id=coach_id, user=request.user)
-
             coach_serializer = CoachSerializer(coach, data=request.data, partial=True, context={'request': request})
-
             if coach_serializer.is_valid():
                 coach_serializer.save()
                 return Response({"msg": "변경되었습니다."}, status=status.HTTP_200_OK)
+
             return Response(coach_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         except ObjectDoesNotExist:
