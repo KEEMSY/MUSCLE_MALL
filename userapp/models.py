@@ -63,3 +63,14 @@ class User(AbstractBaseUser):
         return self.is_admin
 
 
+class Coach(models.Model):
+    KIND = {
+        ("nutrition", "Nutrition"),
+        ("fitness", "Fitness")
+    }
+
+    user = models.OneToOneField(User, verbose_name="user", on_delete=models.CASCADE)
+    nickname = models.CharField("닉네임", max_length=50)
+    phone_number = models.CharField("전화번호", max_length=20)
+    created_at = models.DateTimeField(auto_now_add=True)
+    kind = models.CharField("전문 분야", choices=KIND, null=False, max_length=20)
