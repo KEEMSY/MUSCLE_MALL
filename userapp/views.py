@@ -90,3 +90,8 @@ class CoachApiView(APIView):
             return Response(coach_serializer, status=status.HTTP_200_OK)
         return Response({"msg": "존재하지 않는 유저입니다."})
 
+    def post(self, request):
+        coach_serializer = CoachSerializer(data=request.data, context={'request': request})
+        coach_serializer.is_valid(raise_exception=True)
+        coach_serializer.save()
+        return Response(coach_serializer.data, status=status.HTTP_201_CREATED)

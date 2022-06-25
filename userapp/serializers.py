@@ -8,6 +8,14 @@ class CoachSerializer(serializers.ModelSerializer):
         model = Coach
         fields = ["user", "nickname", "phone_number", "kind"]
 
+    def validate(self, data):
+        request_user = self.context['request'].user
+        if request_user != data["user"]:
+            raise serializers.ValidationError(
+                # custom validation error message
+                detail={"error": "잘못된 접근입니다."},
+            )
+        return data
 
 class UserSerializer(serializers.ModelSerializer):
     coach = CoachSerializer(required=False)
