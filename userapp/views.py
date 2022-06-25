@@ -7,8 +7,8 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from userapp.models import User
-from userapp.serializers import UserSerializer
+from userapp.models import User, Coach
+from userapp.serializers import UserSerializer, CoachSerializer
 
 
 class UserApiView(APIView):
@@ -70,3 +70,23 @@ class UserView(APIView):
     def delete(self, request):
         logout(request)
         return Response({"msg": "로그아웃 성공"}, status=status.HTTP_200_OK)
+
+
+class CoachApiView(APIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get(self, request, user_id=None):
+        if user_id:
+            try:
+                coach = Coach.objects.get(id=user_id)
+                coach_serializer = CoachSerializer(coach).data
+                return Response(coach_serializer, status=status.HTTP_200_OK)
+            except ObjectDoesNotExist:
+                return Response({"msg": "존재하지 않는 유저입니다."})
+
+        coachs = Coach.objects.all()
+        if len(coachs):
+            coach_serializer = CoachSerializer(coachs, many=True).data
+            return Response(coach_serializer, status=status.HTTP_200_OK)
+        return Response({"msg": "존재하지 않는 유저입니다."})
+
