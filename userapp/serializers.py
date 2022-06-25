@@ -17,6 +17,7 @@ class CoachSerializer(serializers.ModelSerializer):
             )
         return data
 
+
 class UserSerializer(serializers.ModelSerializer):
     coach = CoachSerializer(required=False)
 

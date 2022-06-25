@@ -78,11 +78,11 @@ class CoachApiView(APIView):
     def get(self, request, user_id=None):
         if user_id:
             try:
-                coach = Coach.objects.get(id=user_id)
+                coach = User.objects.get(id=user_id).coach
                 coach_serializer = CoachSerializer(coach).data
                 return Response(coach_serializer, status=status.HTTP_200_OK)
             except ObjectDoesNotExist:
-                return Response({"msg": "존재하지 않는 유저입니다."})
+                return Response({"msg": "존재하지 않는 유저입니다."}, status=status.HTTP_404_NOT_FOUND)
 
         coachs = Coach.objects.all()
         if len(coachs):
