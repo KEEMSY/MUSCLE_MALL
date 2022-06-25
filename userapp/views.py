@@ -109,3 +109,12 @@ class CoachApiView(APIView):
 
         except ObjectDoesNotExist:
             return Response({"msg": "잘못된 접근입니다."}, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, coach_id):
+        try:
+            coach = Coach.objects.get(id=coach_id, user=request.user)
+            coach.delete()
+            return Response({"msg": "삭제되었습니다."}, status=status.HTTP_200_OK)
+
+        except ObjectDoesNotExist:
+            return Response({"msg": "잘못된 접근입니다."}, status=status.HTTP_400_BAD_REQUEST)
