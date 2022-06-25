@@ -75,10 +75,10 @@ class UserView(APIView):
 class CoachApiView(APIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-    def get(self, request, user_id=None):
-        if user_id:
+    def get(self, request, coach_id=None):
+        if coach_id:
             try:
-                coach = User.objects.get(id=user_id).coach
+                coach = Coach.objects.get(id=coach_id)
                 coach_serializer = CoachSerializer(coach).data
                 return Response(coach_serializer, status=status.HTTP_200_OK)
             except ObjectDoesNotExist:
@@ -91,7 +91,23 @@ class CoachApiView(APIView):
         return Response({"msg": "존재하지 않는 유저입니다."})
 
     def post(self, request):
+        request.data['user'] = request.user.id
         coach_serializer = CoachSerializer(data=request.data, context={'request': request})
         coach_serializer.is_valid(raise_exception=True)
         coach_serializer.save()
         return Response(coach_serializer.data, status=status.HTTP_201_CREATED)
+
+    def put(self, request, coach_id):
+        request.data['user'] = request.user.id
+        try:
+            coach = Coach.objects.get(id=coach_id, user=request.user)
+
+            coach_serializer = CoachSerializer(coach, data=request.data, partial=True, context={'request': request})
+
+            if coach_serializer.is_valid():
+                coach_serializer.save()
+                return Response({"msg": "변경되었습니다."}, status=status.HTTP_200_OK)
+            return Response(coach_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        except ObjectDoesNotExist:
+            return Response({"msg": "잘못된 접근입니다."}, status=status.HTTP_400_BAD_REQUEST)
