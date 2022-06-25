@@ -75,20 +75,20 @@ class UserView(APIView):
 class CoachApiView(APIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-    def get(self, request, coach_id=None):
-        if coach_id:
+    def get(self, request, user_id=None):
+        if user_id:
             try:
-                coach = Coach.objects.get(id=coach_id)
+                coach = Coach.objects.get(user_id=user_id)
                 coach_serializer = CoachSerializer(coach).data
                 return Response(coach_serializer, status=status.HTTP_200_OK)
             except ObjectDoesNotExist:
-                return Response({"msg": "존재하지 않는 유저입니다."}, status=status.HTTP_404_NOT_FOUND)
+                return Response({"msg": "존재하지 않는 코치입니다."}, status=status.HTTP_404_NOT_FOUND)
 
         coachs = Coach.objects.all()
         if len(coachs):
             coach_serializer = CoachSerializer(coachs, many=True).data
             return Response(coach_serializer, status=status.HTTP_200_OK)
-        return Response({"msg": "존재하지 않는 유저입니다."})
+        return Response({"msg": "현재 코치가 존재하지 않습니다."})
 
     def post(self, request):
         request.data['user'] = request.user.id
@@ -97,9 +97,9 @@ class CoachApiView(APIView):
         coach_serializer.save()
         return Response(coach_serializer.data, status=status.HTTP_201_CREATED)
 
-    def put(self, request, coach_id):
+    def put(self, request):
         try:
-            coach = Coach.objects.get(id=coach_id, user=request.user)
+            coach = Coach.objects.get(user=request.user)
             coach_serializer = CoachSerializer(coach, data=request.data, partial=True)
             if coach_serializer.is_valid():
                 coach_serializer.save()
@@ -110,11 +110,11 @@ class CoachApiView(APIView):
         except ObjectDoesNotExist:
             return Response({"msg": "잘못된 접근입니다."}, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, coach_id):
+    def delete(self, request):
         try:
-            coach = Coach.objects.get(id=coach_id, user=request.user)
+            coach = Coach.objects.get(user=request.user)
             coach.delete()
             return Response({"msg": "삭제되었습니다."}, status=status.HTTP_200_OK)
 
         except ObjectDoesNotExist:
-            return Response({"msg": "잘못된 접근입니다."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"msg": "코치가 존재하지 않습니다."}, status=status.HTTP_400_BAD_REQUEST)
