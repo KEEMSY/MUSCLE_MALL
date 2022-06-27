@@ -19,3 +19,12 @@ def get_product_category(category_id=None):
             return categories_serializer
         except ObjectDoesNotExist:
             return False
+
+
+def save_product_category(**kwargs):
+    product_category_serializer = ProductCategorySerializer(data=kwargs)
+    product_category_serializer.is_valid(raise_exception=True)
+    product_category_serializer.save()
+    return product_category_serializer.data
+
+
