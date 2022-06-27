@@ -41,7 +41,7 @@ class Routine(models.Model):
 class Cart(models.Model):
     user = models.ForeignKey(User, verbose_name="유저", on_delete=models.CASCADE)
     routine = models.ForeignKey(Routine, verbose_name="루틴", on_delete=models.CASCADE)
-    quantioty = models.IntegerField()
+    quantity = models.IntegerField()
 
 
 
