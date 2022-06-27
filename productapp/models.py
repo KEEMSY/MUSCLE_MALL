@@ -22,7 +22,7 @@ class Product(models.Model):
     name = models.CharField("이름", max_length=128)
     description = models.CharField("설명", max_length=256)
     difficulty = models.IntegerField("난이도")
-    category = models.ForeignKey(ProductCategory, verbose_name="종류", on_delete=models.CASCADE)
+    category = models.ManyToManyField(ProductCategory, verbose_name="종류")
 
     def __str__(self):
         return self.name
@@ -30,20 +30,16 @@ class Product(models.Model):
 
 class Routine(models.Model):
     user = models.ForeignKey(User, verbose_name="유저", on_delete=models.CASCADE)
-    name = models.CharField("루틴 이름", max_length=50)
-    description = models.CharField("설명", max_length=256)
     product = models.ForeignKey(Product, verbose_name="제품", on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
+    quantity = models.IntegerField("수량", default=1)
 
     def __str__(self):
-        return self.name
+        return f"{self.product.name} by {self.user.fullname}"
 
 
-class Cart(models.Model):
+class Challenge(models.Model):
     user = models.ForeignKey(User, verbose_name="유저", on_delete=models.CASCADE)
-    quantity = models.IntegerField(null=True)
     routine = models.ForeignKey(Routine, verbose_name="루틴", on_delete=models.CASCADE)
 
-
-
-
+    def __str__(self):
+        return f"{self.routine.product.name} by {self.user.fullname}"

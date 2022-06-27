@@ -61,3 +61,17 @@ class ProductApiView(APIView):
             return Response({"msg": "삭제되었습니다."}, status=status.HTTP_200_OK)
 
         return Response({"msg": "올바른 접근이 아닙니다."}, status=status.HTTP_404_NOT_FOUND)
+
+
+class RoutineApiView(APIView):
+    def get(self, request):
+        return Response({"msg": "get method"})
+
+    def post(self, request):
+        return Response({"msg": "get method"})
+
+    def put(self, request):
+        return Response({"msg": "get method"})
+
+    def delete(self, request):
+        return Response({"msg": "get method"})
