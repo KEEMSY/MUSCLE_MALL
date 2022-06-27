@@ -18,7 +18,7 @@ class ProductCategory(models.Model):
 
 
 class Product(models.Model):
-    name = models.CharField(" 이름", max_length=128)
+    name = models.CharField("이름", max_length=128)
     description = models.CharField("설명", max_length=256)
     difficulty = models.IntegerField("난이도")
     category = models.OneToOneField(ProductCategory, verbose_name="종류", on_delete=models.CASCADE)

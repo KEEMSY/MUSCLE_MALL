@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 
 from productapp.services.product_category_service import get_product_category, save_product_category, \
     edit_product_category, delete_product_category
+from productapp.services.product_service import get_product
 
 
 class ProductCategoryApiView(APIView):
@@ -31,3 +32,20 @@ class ProductCategoryApiView(APIView):
             return Response({"msg": "삭제되었습니다."}, status=status.HTTP_200_OK)
 
         return Response({"msg": "카테고리가 존재하지 않습니다."}, status=status.HTTP_404_NOT_FOUND)
+
+
+class ProductApiView(APIView):
+    def get(self, request, product_id=None):
+        product = get_product(product_id)
+        if product:
+            return Response(product, status=status.HTTP_200_OK)
+        return Response({'msg': "해당하는 운동 / 음식이 존재하지 않습니다."}, status=status.HTTP_404_NOT_FOUND)
+
+    def post(self, request):
+        return Response({"msg": "post method!"})
+
+    def put(self, request):
+        return Response({"msg": "put method!"})
+
+    def delete(self, request):
+        return Response({"msg": "delete method!"})
