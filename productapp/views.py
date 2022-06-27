@@ -5,9 +5,10 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from productapp.permissions import IsAdminOrIsAuthenticatedAndIsCoachOrReadOnly
 from productapp.services.product_category_service import get_product_category, save_product_category, \
     edit_product_category, delete_product_category
-from productapp.services.product_service import get_product
+from productapp.services.product_service import get_product, save_product
 
 
 class ProductCategoryApiView(APIView):
@@ -35,6 +36,8 @@ class ProductCategoryApiView(APIView):
 
 
 class ProductApiView(APIView):
+    permission_classes = [IsAdminOrIsAuthenticatedAndIsCoachOrReadOnly]
+
     def get(self, request, product_id=None):
         product = get_product(product_id)
         if product:
@@ -42,7 +45,8 @@ class ProductApiView(APIView):
         return Response({'msg': "해당하는 운동 / 음식이 존재하지 않습니다."}, status=status.HTTP_404_NOT_FOUND)
 
     def post(self, request):
-        return Response({"msg": "post method!"})
+        product = save_product(**request.data)
+        return Response(product, status=status.HTTP_201_CREATED)
 
     def put(self, request):
         return Response({"msg": "put method!"})

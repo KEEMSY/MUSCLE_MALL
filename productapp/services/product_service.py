@@ -19,3 +19,10 @@ def get_product(product_id=None):
             return product_serializer
         except ObjectDoesNotExist:
             return False
+
+
+def save_product(**kwargs):
+    productserializer = ProductSerializer(data=kwargs)
+    productserializer.is_valid(raise_exception=True)
+    productserializer.save()
+    return productserializer.data
