@@ -38,3 +38,12 @@ def edit_product_category(category_id, **kwargs):
 
     except ObjectDoesNotExist:
         return False
+
+
+def delete_product_category(category_id):
+    try:
+        category = ProductCategory.objects.get(id=category_id)
+        category.delete()
+        return True
+    except ObjectDoesNotExist:
+        return False
