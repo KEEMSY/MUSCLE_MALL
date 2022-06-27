@@ -14,8 +14,8 @@ def get_product(product_id=None):
             return False
     else:
         try:
-            product = Product.objects.get(id=product_id)
-            product_serializer = ProductSerializer(product).data
+            product = Product.objects.all()
+            product_serializer = ProductSerializer(product, many=True).data
             return product_serializer
         except ObjectDoesNotExist:
             return False

@@ -24,15 +24,17 @@ class IsAdminOrIsAuthenticatedAndIsCoachOrReadOnly(BasePermission):
                 "detail": "서비스를 이용하기 위해 로그인 해주세요.",
             }
             raise GenericAPIException(status_code=status.HTTP_401_UNAUTHORIZED, detail=response)
-        try:
-            coach = Coach.objects.get(user=user)
-            if user.is_authenticated and user.is_admin:
-                return True
 
-            if user.is_authenticated and request.method in self.SAFE_METHODS:
+        if user.is_authenticated and request.method in self.SAFE_METHODS or user.is_admin:
+            return True
+
+        if user.is_authenticated:
+            try:
+                coach = Coach.objects.get(user=user)
                 return True
-        except ObjectDoesNotExist:
-            response = {
-                "detail": "서비스 이용을 위해 코치 등록을 해주세요.",
-            }
-            raise GenericAPIException(status_code=status.HTTP_401_UNAUTHORIZED, detail=response)
+            except ObjectDoesNotExist:
+                response = {
+                    "detail": "서비스 이용을 위해 코치 등록을 해주세요.",
+                }
+                raise GenericAPIException(status_code=status.HTTP_401_UNAUTHORIZED, detail=response)
+
