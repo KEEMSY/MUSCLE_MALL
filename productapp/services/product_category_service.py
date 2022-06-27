@@ -28,3 +28,13 @@ def save_product_category(**kwargs):
     return product_category_serializer.data
 
 
+def edit_product_category(category_id, **kwargs):
+    try:
+        category = ProductCategory.objects.get(id=category_id)
+        product_category_serializer = ProductCategorySerializer(category, data=kwargs, partial=True)
+        product_category_serializer.is_valid(raise_exception=True)
+        product_category_serializer.save()
+        return product_category_serializer.data
+
+    except ObjectDoesNotExist:
+        return False

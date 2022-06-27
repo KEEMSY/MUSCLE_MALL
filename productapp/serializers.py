@@ -8,6 +8,12 @@ class ProductCategorySerializer(serializers.ModelSerializer):
         model = ProductCategory
         fields = ["name", "description", "kind"]
 
+    def update(self, instance, validated_data):
+        for key, value in validated_data.items():
+            setattr(instance, key, value)
+        instance.save()
+        return instance
+
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
