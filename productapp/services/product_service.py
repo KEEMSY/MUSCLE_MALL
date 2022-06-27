@@ -26,3 +26,15 @@ def save_product(**kwargs):
     productserializer.is_valid(raise_exception=True)
     productserializer.save()
     return productserializer.data
+
+
+def edit_product(product_id, **kwargs):
+    try:
+        product = Product.objects.get(id=product_id)
+        product_serializer = ProductSerializer(product, data=kwargs, partial=True)
+        product_serializer.is_valid(raise_exception=True)
+        product_serializer.save()
+        return product_serializer.data
+
+    except ObjectDoesNotExist:
+        return False

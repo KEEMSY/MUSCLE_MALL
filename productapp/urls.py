@@ -6,5 +6,6 @@ urlpatterns = [
     path('category/', views.ProductCategoryApiView.as_view()),
     path('category/<category_id>/', views.ProductCategoryApiView.as_view()),
     path('', views.ProductApiView.as_view()),
+    path('<product_id>/', views.ProductApiView.as_view()),
 
 ]
