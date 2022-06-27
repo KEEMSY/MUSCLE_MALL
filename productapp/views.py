@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 from productapp.permissions import IsAdminOrIsAuthenticatedAndIsCoachOrReadOnly
 from productapp.services.product_category_service import get_product_category, save_product_category, \
     edit_product_category, delete_product_category
-from productapp.services.product_service import get_product, save_product, edit_product
+from productapp.services.product_service import get_product, save_product, edit_product, delete_product
 
 
 class ProductCategoryApiView(APIView):
@@ -42,7 +42,7 @@ class ProductApiView(APIView):
         product = get_product(product_id)
         if product:
             return Response(product, status=status.HTTP_200_OK)
-        return Response({'msg': "해당하는 운동 / 음식이 존재하지 않습니다."}, status=status.HTTP_404_NOT_FOUND)
+        return Response({'msg': "해당 하는 운동 / 음식이 존재하지 않습니다."}, status=status.HTTP_404_NOT_FOUND)
 
     def post(self, request):
         product = save_product(**request.data)
@@ -52,8 +52,12 @@ class ProductApiView(APIView):
         product = edit_product(product_id, **request.data)
         if product:
             return Response(product, status=status.HTTP_201_CREATED)
-        return Response({'msg': "카테고리가 존재하지 않습니다."}, status=status.HTTP_404_NOT_FOUND)
+        return Response({'msg': "해당하는 운동 / 음식이 존재하지 않습니다."}, status=status.HTTP_404_NOT_FOUND)
 
+    def delete(self, request, product_id=None):
+        user = request.user
+        product = delete_product(user, product_id)
+        if product:
+            return Response({"msg": "삭제되었습니다."}, status=status.HTTP_200_OK)
 
-def delete(self, request):
-        return Response({"msg": "delete method!"})
+        return Response({"msg": "올바른 접근이 아닙니다."}, status=status.HTTP_404_NOT_FOUND)

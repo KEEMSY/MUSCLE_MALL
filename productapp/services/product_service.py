@@ -38,3 +38,20 @@ def edit_product(product_id, **kwargs):
 
     except ObjectDoesNotExist:
         return False
+
+
+def delete_product(user, product_id=None):
+    if product_id:
+        try:
+            product = Product.objects.get(user=user, id=product_id)
+            product.delete()
+            return True
+        except ObjectDoesNotExist:
+            return False
+    else:
+        try:
+            product = Product.objects.filter(user=user)
+            product.delete()
+            return True
+        except ObjectDoesNotExist:
+            return False

@@ -18,10 +18,11 @@ class ProductCategory(models.Model):
 
 
 class Product(models.Model):
+    user = models.ForeignKey(User, verbose_name="유저", on_delete=models.CASCADE)
     name = models.CharField("이름", max_length=128)
     description = models.CharField("설명", max_length=256)
     difficulty = models.IntegerField("난이도")
-    category = models.OneToOneField(ProductCategory, verbose_name="종류", on_delete=models.CASCADE)
+    category = models.ForeignKey(ProductCategory, verbose_name="종류", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -40,8 +41,9 @@ class Routine(models.Model):
 
 class Cart(models.Model):
     user = models.ForeignKey(User, verbose_name="유저", on_delete=models.CASCADE)
+    quantity = models.IntegerField(null=True)
     routine = models.ForeignKey(Routine, verbose_name="루틴", on_delete=models.CASCADE)
-    quantity = models.IntegerField()
+
 
 
 
