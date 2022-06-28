@@ -24,4 +24,4 @@ class ProductSerializer(serializers.ModelSerializer):
 class RoutineSerializer(serializers.ModelSerializer):
     class Meta:
         model = Routine
-        fields = ["user", "name", "description", "difficulty", "product"]
+        fields = ["user", "product", "quantity"]

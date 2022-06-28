@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 # Create your views here.
-from rest_framework import status
+from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -9,6 +9,7 @@ from productapp.permissions import IsAdminOrIsAuthenticatedAndIsCoachOrReadOnly
 from productapp.services.product_category_service import get_product_category, save_product_category, \
     edit_product_category, delete_product_category
 from productapp.services.product_service import get_product, save_product, edit_product, delete_product
+from productapp.services.routine_service import get_routine
 
 
 class ProductCategoryApiView(APIView):
@@ -64,14 +65,25 @@ class ProductApiView(APIView):
 
 
 class RoutineApiView(APIView):
-    def get(self, request):
-        return Response({"msg": "get method"})
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
+    # 해당 루틴 정보 조회
+    def get(self, request, routine_id=None):
+        user = request.user
+        routine = get_routine(user, routine_id)
+        if routine:
+            return Response(routine, status=status.HTTP_200_OK)
+        return Response({'msg': "루틴이 존재하지 않습니다."}, status=status.HTTP_404_NOT_FOUND)
+
+    # 루틴 등록
     def post(self, request):
-        return Response({"msg": "get method"})
+        return Response({"msg": "post method"})
 
-    def put(self, request):
-        return Response({"msg": "get method"})
+    # 루틴 수정
+    def put(self, request, routine_id=None):
+        return Response({"msg": "put method"})
 
+    # 루제 삭제
     def delete(self, request):
-        return Response({"msg": "get method"})
+        return Response({"msg": "delete method"})
+
