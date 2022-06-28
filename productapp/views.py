@@ -9,7 +9,7 @@ from productapp.permissions import IsAdminOrIsAuthenticatedAndIsCoachOrReadOnly
 from productapp.services.product_category_service import get_product_category, save_product_category, \
     edit_product_category, delete_product_category
 from productapp.services.product_service import get_product, save_product, edit_product, delete_product
-from productapp.services.routine_service import get_routine, save_routine, edit_routine
+from productapp.services.routine_service import get_routine, save_routine, edit_routine, delete_routine
 
 
 class ProductCategoryApiView(APIView):
@@ -90,5 +90,10 @@ class RoutineApiView(APIView):
 
     # 루틴 삭제
     def delete(self, request, routine_id=None):
-        return Response({"msg": "delete method"})
+        user = request.user
+        routine = delete_routine(user, routine_id)
+        if routine:
+            return Response({"msg": "삭제되었습니다."}, status=status.HTTP_200_OK)
+
+        return Response({"msg": "올바른 접근이 아닙니다."}, status=status.HTTP_404_NOT_FOUND)
 

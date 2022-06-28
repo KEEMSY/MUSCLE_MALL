@@ -43,3 +43,20 @@ def edit_routine(user, routine_id, **kwargs):
 
     except ObjectDoesNotExist:
         return False
+
+
+def delete_routine(user, routine_id=None):
+    if routine_id:
+        try:
+            routine = Routine.objects.get(user=user, id=routine_id)
+            routine.delete()
+            return True
+        except ObjectDoesNotExist:
+            return False
+    else:
+        try:
+            routine = Routine.objects.filter(user=user)
+            routine.delete()
+            return True
+        except ObjectDoesNotExist:
+            return False
