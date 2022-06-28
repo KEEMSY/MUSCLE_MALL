@@ -31,3 +31,15 @@ def save_routine(**kwargs):
     routine_serializer.is_valid(raise_exception=True)
     routine_serializer.save()
     return routine_serializer.data
+
+
+def edit_routine(user, routine_id, **kwargs):
+    try:
+        routine = Routine.objects.get(user=user, id=routine_id)
+        routine_serializer = RoutineSerializer(routine, data=kwargs, partial=True)
+        routine_serializer.is_valid(raise_exception=True)
+        routine_serializer.save()
+        return routine_serializer.data
+
+    except ObjectDoesNotExist:
+        return False
