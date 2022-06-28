@@ -6,7 +6,7 @@ from userapp.models import User, Coach
 class CoachSerializer(serializers.ModelSerializer):
     class Meta:
         model = Coach
-        fields = ["user", "nickname", "phone_number", "kind"]
+        fields = ["user", "nickname", "phone_number", "kind",]
 
     def update(self, instance, validated_data):
         for key, value in validated_data.items():
@@ -16,11 +16,28 @@ class CoachSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
+    product_by_user = serializers.SerializerMethodField()
+
+    def get_product_by_user(self, obj):
+        category_list = []
+        for category in obj.product_set.all():
+            category_list.append(category.name)
+        return category_list
+
+    interesting_category = serializers.SerializerMethodField()
+
+    def get_interesting_category(self, obj):
+        category_list = []
+        for product in obj.product_set.all():
+            for category in product.category.all():
+                category_list.append((category.name, category.kind))
+        return category_list
+
     coach = CoachSerializer(required=False)
 
     class Meta:
         model = User
-        fields = ["username", "email", "password", "fullname", "gender", "coach"]
+        fields = ["username", "email", "password", "fullname", "gender", "coach", "product_by_user", "interesting_category"]
 
         extra_kwargs = {
             "password": {'write_only': True},
