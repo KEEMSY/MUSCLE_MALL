@@ -24,3 +24,10 @@ def get_routine(user, routine_id=None):
 
     except ObjectDoesNotExist:
         return False
+
+
+def save_routine(**kwargs):
+    routine_serializer = RoutineSerializer(data=kwargs)
+    routine_serializer.is_valid(raise_exception=True)
+    routine_serializer.save()
+    return routine_serializer.data
