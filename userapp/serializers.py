@@ -19,18 +19,18 @@ class UserSerializer(serializers.ModelSerializer):
     product_by_user = serializers.SerializerMethodField()
 
     def get_product_by_user(self, obj):
-        category_list = []
+        category_list = set()
         for category in obj.product_set.all():
-            category_list.append(category.name)
+            category_list.add(category.name)
         return category_list
 
     interesting_category = serializers.SerializerMethodField()
 
     def get_interesting_category(self, obj):
-        category_list = []
+        category_list = set()
         for product in obj.product_set.all():
             for category in product.category.all():
-                category_list.append((category.name, category.kind))
+                category_list.add((category.name, category.kind))
         return category_list
 
     coach = CoachSerializer(required=False)
