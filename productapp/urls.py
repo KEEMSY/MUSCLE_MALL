@@ -13,6 +13,9 @@ urlpatterns = [
     path('routine/', views.RoutineApiView.as_view()),
     path('routine/<routine_id>/', views.RoutineApiView.as_view()),
 
+    path('challenge/', views.ChallengeApiView.as_view()),
+    path('challenge/<challenge_id>/', views.ChallengeApiView.as_view()),
+
     path('', views.ProductApiView.as_view()),
     path('<product_id>/', views.ProductApiView.as_view()),
 

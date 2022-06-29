@@ -1,10 +1,7 @@
-import random
-
 from django.core.exceptions import ObjectDoesNotExist
 
 from productapp.models import Routine
 from productapp.serializers import RoutineSerializer
-from userapp.models import User
 
 
 def get_routine(user, routine_id=None):
