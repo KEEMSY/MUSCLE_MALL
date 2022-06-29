@@ -6,7 +6,7 @@ from productapp.models import ProductCategory, Product, Routine, Challenge
 class ProductCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductCategory
-        fields = ["name", "description", "kind"]
+        fields = ["description", "kind"]
 
     def update(self, instance, validated_data):
         for key, value in validated_data.items():
