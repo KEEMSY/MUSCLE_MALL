@@ -49,10 +49,9 @@ class UserApiView(APIView):
         return Response(user_serilaizer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     # 사용자 삭제
-    def delete(self, request, user_id):
-        user = get_object_or_404(User, id=user_id)
-        if request.user.id != user.id:
-            return Response({"msg": "잘못된 접근입니다."}, status=status.HTTP_400_BAD_REQUEST)
+    def delete(self, request):
+        request_user = request.user
+        user = get_object_or_404(User, id=request_user.id)
         user.delete()
         return Response({"msg": "회원탈퇴 완료"}, status=status.HTTP_200_OK)
 

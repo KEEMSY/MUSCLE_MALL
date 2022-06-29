@@ -26,8 +26,8 @@ class ProductDetailCategory(models.Model):
 
 
 class Product(models.Model):
-    user = models.ForeignKey(User, verbose_name="유저", on_delete=models.SET_NULL)
-    category = models.ForeignKey(ProductDetailCategory, related_name="detail_category", on_delete=models.SET_NULL)
+    user = models.ForeignKey(User, verbose_name="유저", on_delete=models.SET_NULL, null=True)
+    category = models.ForeignKey(ProductDetailCategory, related_name="detail_category", on_delete=models.SET_NULL, null=True)
 
     name = models.CharField("이름", max_length=128)
     description = models.CharField("설명", max_length=256)
@@ -39,7 +39,7 @@ class Product(models.Model):
 
 class Routine(models.Model):
     user = models.ForeignKey(User, verbose_name="유저", on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, verbose_name="제품", on_delete=models.SET_NULL)
+    product = models.ForeignKey(Product, verbose_name="제품", on_delete=models.SET_NULL, null=True)
     quantity = models.IntegerField("수량", default=1)
 
     def __str__(self):
@@ -54,7 +54,7 @@ class Challenge(models.Model):
     )
 
     user = models.ForeignKey(User, verbose_name="유저", on_delete=models.CASCADE)
-    routine = models.ForeignKey(Routine, verbose_name="루틴", on_delete=models.SET_NULL)
+    routine = models.ForeignKey(Routine, verbose_name="루틴", on_delete=models.SET_NULL, null=True)
     status = models.CharField(choices=STATUS, max_length=20, default=STATUS[0][0])
 
     def __str__(self):
