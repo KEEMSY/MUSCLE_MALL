@@ -39,9 +39,9 @@ def save_product_detail_category(**kwargs):
     return product_detail_category_serializer.data
 
 
-def edit_product_detail_category(category_id, **kwargs):
+def edit_product_detail_category(detail_category, detail_category_id, **kwargs):
     try:
-        category = ProductDetailCategory.objects.get(id=category_id)
+        category = ProductDetailCategory.objects.get(id=detail_category_id, category_id=detail_category)
         product_detail_category_serializer = ProductDetailCategorySerializer(category, data=kwargs, partial=True)
         product_detail_category_serializer.is_valid(raise_exception=True)
         product_detail_category_serializer.save()
@@ -51,9 +51,9 @@ def edit_product_detail_category(category_id, **kwargs):
         return False
 
 
-def delete_product_delete_category(category_id):
+def delete_product_delete_category(detail_category, detail_category_id):
     try:
-        category = ProductDetailCategory.objects.get(id=category_id)
+        category = ProductDetailCategory.objects.get(id=detail_category_id, category_id=detail_category)
         category.delete()
         return True
     except ObjectDoesNotExist:
