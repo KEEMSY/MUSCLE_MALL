@@ -64,7 +64,6 @@ class ProductDetailCategoryApiView(APIView):
         return Response({'msg': "카테고리가 존재하지 않습니다."}, status=status.HTTP_404_NOT_FOUND)
 
 
-
 class ProductApiView(APIView):
     permission_classes = [IsAdminOrIsAuthenticatedAndIsCoachOrReadOnly]
 
