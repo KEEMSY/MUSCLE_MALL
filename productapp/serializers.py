@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from productapp.models import ProductCategory, Product, Routine
+from productapp.models import ProductCategory, Product, Routine, Challenge
 
 
 class ProductCategorySerializer(serializers.ModelSerializer):
@@ -25,3 +25,10 @@ class RoutineSerializer(serializers.ModelSerializer):
     class Meta:
         model = Routine
         fields = ["user", "product", "quantity"]
+
+
+class ChallengeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Challenge
+        fields = ["user", "routine","status"]
+
