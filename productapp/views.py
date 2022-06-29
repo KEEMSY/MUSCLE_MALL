@@ -5,7 +5,7 @@ from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from productapp.permissions import IsAdminOrIsAuthenticatedAndIsCoachOrReadOnly
+from productapp.permissions import IsAdminOrReadOnly
 from productapp.services.product_category_service import get_product_category, save_product_category, \
     edit_product_category, delete_product_category
 from productapp.services.product_detail_category_service import get_product_detail_category, \
@@ -65,7 +65,7 @@ class ProductDetailCategoryApiView(APIView):
 
 
 class ProductApiView(APIView):
-    permission_classes = [IsAdminOrIsAuthenticatedAndIsCoachOrReadOnly]
+    permission_classes = [IsAdminOrReadOnly]
 
     def get(self, request, product_id=None):
         product = get_product(product_id)
@@ -95,7 +95,7 @@ class ProductApiView(APIView):
 class RoutineApiView(APIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-    # 해당 루틴 정보 조회
+    # 현재 작성 중인 루틴 정보 조회
     def get(self, request, routine_id=None):
         user = request.user
         routine = get_routine(user, routine_id)
@@ -105,6 +105,8 @@ class RoutineApiView(APIView):
 
     # 루틴 등록
     def post(self, request):
+        user = request.user.id
+        request.data["user"] = user
         routine = save_routine(**request.data)
         return Response(routine, status=status.HTTP_201_CREATED)
 
