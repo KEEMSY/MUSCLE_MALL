@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from productapp.models import ProductCategory, Product, Routine, Challenge
+from productapp.models import ProductCategory, Product, Routine, Challenge, ProductDetailCategory
 
 
 class ProductCategorySerializer(serializers.ModelSerializer):
@@ -13,6 +13,12 @@ class ProductCategorySerializer(serializers.ModelSerializer):
             setattr(instance, key, value)
         instance.save()
         return instance
+
+
+class ProductDetailCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductDetailCategory
+        fields = ["name", "description", "category"]
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -30,5 +36,4 @@ class RoutineSerializer(serializers.ModelSerializer):
 class ChallengeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Challenge
-        fields = ["user", "routine","status"]
-
+        fields = ["user", "routine", "status"]
