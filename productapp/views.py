@@ -8,7 +8,8 @@ from rest_framework.views import APIView
 from productapp.permissions import IsAdminOrIsAuthenticatedAndIsCoachOrReadOnly
 from productapp.services.product_category_service import get_product_category, save_product_category, \
     edit_product_category, delete_product_category
-from productapp.services.product_detail_category_service import get_product_detail_category
+from productapp.services.product_detail_category_service import get_product_detail_category, \
+    save_product_detail_category
 from productapp.services.product_service import get_product, save_product, edit_product, delete_product
 from productapp.services.routine_service import get_routine, save_routine, edit_routine, delete_routine
 
@@ -46,7 +47,8 @@ class ProductDetailCategoryApiView(APIView):
         return Response({'msg': "카테고리가 존재하지 않습니다."}, status=status.HTTP_404_NOT_FOUND)
 
     def post(self, request):
-        return Response({"msg": "post method"})
+        detail_category = save_product_detail_category(**request.data)
+        return Response(detail_category, status=status.HTTP_201_CREATED)
 
     def put(self, request):
         return Response({"msg": "put method"})
