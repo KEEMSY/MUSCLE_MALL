@@ -26,9 +26,9 @@ def get_challenge(user, challenge_id=None):
 
 @transaction.atomic
 def save_challenge(user_id):
-    # try가 아니고 길이로 확인해야할 듯
-    try:
-        routines = Routine.objects.filter(user=user_id)
+
+    routines = Routine.objects.filter(user=user_id)
+    if len(routines):
         data = {
             "user": user_id,
         }
@@ -42,8 +42,11 @@ def save_challenge(user_id):
 
         return True
 
-    except ObjectDoesNotExist:
+    else:
         return False
+
+
+
 
 
 def edit_challenge(user, challenge_id):
