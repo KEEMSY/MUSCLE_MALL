@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from productapp.permissions import IsAdminOrReadOnly
-from productapp.services.challenge_service import get_challenge, save_challenge
+from productapp.services.challenge_service import get_challenge, save_challenge, edit_challenge
 from productapp.services.product_category_service import get_product_category, save_product_category, \
     edit_product_category, delete_product_category
 from productapp.services.product_detail_category_service import get_product_detail_category, \
@@ -136,19 +136,21 @@ class ChallengeApiView(APIView):
         if challenge:
             return Response(challenge, status=status.HTTP_200_OK)
 
-        return Response({'msg': "챌린지를 등록 해주세요"}, status=status.HTTP_404_NOT_FOUND)
+        return Response({'msg': "챌린지를 확인 해주세요"}, status=status.HTTP_404_NOT_FOUND)
 
     def post(self, request):
-        user = request.user.id
-        request.data["user"] = user
-        challenge = save_challenge(**request.data)
+        challenge = save_challenge(request.user.id)
         if challenge:
-            return Response(challenge, status=status.HTTP_201_CREATED)
+            return Response({"msg": "챌린지가 생성되었습니다."}, status=status.HTTP_201_CREATED)
 
         return Response({"msg": "올바른 접근이 아닙니다."}, status=status.HTTP_400_BAD_REQUEST)
 
-    def put(self, request):
-        return Response({"msg": "put method"})
+    def put(self, request, challenge_id):
+        challenge = edit_challenge(request.user, challenge_id)
+        if challenge:
+            return Response(challenge, status=status.HTTP_200_OK)
+
+        return Response({"msg": "챌린지가 존재하지 않습니다."}, status=status.HTTP_404_NOT_FOUND)
 
     def delete(self, request):
         return Response({"msg": "delete method"})
