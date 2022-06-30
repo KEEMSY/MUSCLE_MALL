@@ -55,10 +55,27 @@ def edit_challenge(user, challenge_id):
         else:
             data["status"] = "완료"
 
-        challenge_serializer = ChallengeSerializer(challenge, data=data,partial=True)
+        challenge_serializer = ChallengeSerializer(challenge, data=data, partial=True)
         challenge_serializer.is_valid(raise_exception=True)
         challenge_serializer.save()
         return challenge_serializer.data
 
     except ObjectDoesNotExist:
         return False
+
+
+def delete_challenge(user, challenge_id=None):
+    if challenge_id:
+        try:
+            challenge = Challenge.objects.get(user=user, id=challenge_id)
+            challenge.delete()
+            return True
+        except ObjectDoesNotExist:
+            return False
+    else:
+        try:
+            challenge = Challenge.objects.filter(user=user)
+            challenge.delete()
+            return True
+        except ObjectDoesNotExist:
+            return False

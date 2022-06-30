@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from productapp.permissions import IsAdminOrReadOnly
-from productapp.services.challenge_service import get_challenge, save_challenge, edit_challenge
+from productapp.services.challenge_service import get_challenge, save_challenge, edit_challenge, delete_challenge
 from productapp.services.product_category_service import get_product_category, save_product_category, \
     edit_product_category, delete_product_category
 from productapp.services.product_detail_category_service import get_product_detail_category, \
@@ -152,5 +152,10 @@ class ChallengeApiView(APIView):
 
         return Response({"msg": "챌린지가 존재하지 않습니다."}, status=status.HTTP_404_NOT_FOUND)
 
-    def delete(self, request):
-        return Response({"msg": "delete method"})
+    def delete(self, request, challenge_id=None):
+        user = request.user
+        challenge = delete_challenge(user, challenge_id)
+        if challenge:
+            return Response({"msg": "삭제되었습니다."}, status=status.HTTP_200_OK)
+
+        return Response({"msg": "올바른 접근이 아닙니다."}, status=status.HTTP_404_NOT_FOUND)
