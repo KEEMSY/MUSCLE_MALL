@@ -26,7 +26,6 @@ def get_challenge(user, challenge_id=None):
 
 @transaction.atomic
 def save_challenge(user_id):
-
     routines = Routine.objects.filter(user=user_id)
     if len(routines):
         data = {
@@ -44,9 +43,6 @@ def save_challenge(user_id):
 
     else:
         return False
-
-
-
 
 
 def edit_challenge(user, challenge_id):
