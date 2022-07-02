@@ -3,6 +3,8 @@ from django.db import transaction
 
 from productapp.models import Challenge, Routine
 from productapp.serializers import ChallengeSerializer
+from userapp.models import User
+from userapp.user_service import edit_user
 
 
 def get_challenge(user, challenge_id=None):
@@ -27,9 +29,12 @@ def get_challenge(user, challenge_id=None):
 @transaction.atomic
 def save_challenge(user_id):
     routines = Routine.objects.filter(user=user_id)
+    user = User.objects.get(id=user_id)
+    bind_number = user.bind_number
     if len(routines):
         data = {
             "user": user_id,
+            "bind_number": bind_number
         }
         for routine in routines:
             data["routine"] = routine.id
@@ -39,7 +44,8 @@ def save_challenge(user_id):
             challenge_serializer.save()
             routine.delete()
 
-        return True
+        if edit_user(user_id, **data):
+            return True
 
     else:
         return False

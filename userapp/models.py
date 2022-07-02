@@ -38,7 +38,7 @@ class User(AbstractBaseUser):
     fullname = models.CharField("이름", max_length=20)
     join_date = models.DateTimeField("가입일", auto_now_add=True)
     gender = models.CharField("성별", max_length=80, choices=GENDER_CHOICES, null=True)
-    bind_number = models.IntegerField(default=1)
+    bind_number = models.IntegerField(default=1, null=True)
 
     is_active = models.BooleanField(default=True)
 

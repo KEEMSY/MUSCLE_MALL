@@ -36,4 +36,4 @@ class RoutineSerializer(serializers.ModelSerializer):
 class ChallengeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Challenge
-        fields = ["user", "routine", "status"]
+        fields = ["user", "routine", "status", "bind_number"]

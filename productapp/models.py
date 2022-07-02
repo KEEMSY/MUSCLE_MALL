@@ -56,7 +56,7 @@ class Challenge(models.Model):
     user = models.ForeignKey(User, verbose_name="유저", on_delete=models.CASCADE)
     routine = models.ForeignKey(Routine, verbose_name="루틴", on_delete=models.SET_NULL, null=True)
     status = models.CharField(choices=STATUS, max_length=20, default=STATUS[0][0])
-    bind_number = models.IntegerField()
+    bind_number = models.IntegerField(null=True)
 
     def __str__(self):
         return self.status
