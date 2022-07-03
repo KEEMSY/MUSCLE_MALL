@@ -30,14 +30,16 @@ def get_challenge(user, challenge_id=None):
 def save_challenge(user_id):
     routines = Routine.objects.filter(user=user_id)
     user = User.objects.get(id=user_id)
-    bind_number = user.bind_number
+
     if len(routines):
         data = {
             "user": user_id,
-            "bind_number": bind_number
+            "bind_number": user.bind_number
         }
+
         for routine in routines:
             data["routine"] = routine.id
+            print("f_data", data)
             challenge_serializer = ChallengeSerializer(data=data)
 
             challenge_serializer.is_valid(raise_exception=True)

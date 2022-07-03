@@ -16,6 +16,8 @@ from productapp.services.routine_service import get_routine, save_routine, edit_
 
 
 class ProductCategoryApiView(APIView):
+    permission_classes = [IsAdminOrReadOnly]
+
     def get(self, request, category_id=None):
         category = get_product_category(category_id)
         if category:

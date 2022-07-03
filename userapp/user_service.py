@@ -11,6 +11,5 @@ def edit_user(user_id, **data):
         user_serilaizer.is_valid(raise_exception=True)
         user_serilaizer.save()
         return True
-
     except ObjectDoesNotExist:
         return False

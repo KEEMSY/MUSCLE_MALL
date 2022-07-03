@@ -37,7 +37,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["username", "email", "password", "fullname", "gender", "coach", ]
+        fields = ["username", "email", "password", "fullname", "gender", "coach", "bind_number"]
 
         extra_kwargs = {
             "password": {'write_only': True},
@@ -56,6 +56,8 @@ class UserSerializer(serializers.ModelSerializer):
             if key == "password":
                 instance.set_password(value)
                 continue
+            elif key == "bind_number":
+                value += 1
 
             setattr(instance, key, value)
         instance.save()

@@ -5,11 +5,9 @@ from productapp.serializers import ProductDetailCategorySerializer
 
 
 def get_product_detail_category(detail_category=None, detail_category_id=None):
-    print(detail_category)
     if detail_category:
         try:
             categories = ProductDetailCategory.objects.filter(category_id=detail_category)
-            print(categories)
             if detail_category_id:
                 try:
                     category = categories.get(id=detail_category_id)
