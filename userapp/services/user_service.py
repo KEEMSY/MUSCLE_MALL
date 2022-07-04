@@ -30,10 +30,14 @@ def save_user(**data):
 def edit_user(user_id, **data):
     try:
         user = User.objects.get(id=user_id)
+        if user.is_anonymous:
+            return False
+
         user_serilaizer = UserSerializer(user, data=data, partial=True)
         user_serilaizer.is_valid(raise_exception=True)
         user_serilaizer.save()
-        return True
+        return user_serilaizer.data
+
     except ObjectDoesNotExist:
         return False
 

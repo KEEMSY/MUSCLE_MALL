@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 
 from userapp.models import User, Coach
 from userapp.serializers import UserSerializer, CoachSerializer
-from userapp.services.user_service import get_user, save_user, delete_user
+from userapp.services.user_service import get_user, save_user, delete_user, edit_user
 
 
 class UserApiView(APIView):
@@ -26,20 +26,12 @@ class UserApiView(APIView):
         return Response(user, status=status.HTTP_201_CREATED)
 
     # 사용자 정보 수정 Done
-    def put(self, request, user_id):
-        user = request.user
-        target_user_id = User.objects.get(id=user_id).id
-        if user.is_anonymous:
-            return Response({"error": "로그인 후 이용해주세요"}, status=status.HTTP_400_BAD_REQUEST)
-        elif user.id != target_user_id:
-            return Response({"error": "올바르지 못한 접근입니다."}, status=status.HTTP_400_BAD_REQUEST)
+    def put(self, request):
+        user = edit_user(request.user.id, **request.data)
+        if user:
+            return Response(user, status=status.HTTP_200_OK)
 
-        user_serilaizer = UserSerializer(user, data=request.data, partial=True)
-        if user_serilaizer.is_valid():
-            user_serilaizer.save()
-            return Response({"msg": "수정되었습니다."}, status=status.HTTP_200_OK)
-
-        return Response(user_serilaizer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"msg": "올바지르 못한 접근 입니다."}, status=status.HTTP_400_BAD_REQUEST)
 
     # 사용자 삭제
     def delete(self, request):
