@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 
 from userapp.models import User, Coach
 from userapp.serializers import UserSerializer, CoachSerializer
-from userapp.services.user_service import get_user, save_user
+from userapp.services.user_service import get_user, save_user, delete_user
 
 
 class UserApiView(APIView):
@@ -43,10 +43,9 @@ class UserApiView(APIView):
 
     # 사용자 삭제
     def delete(self, request):
-        request_user = request.user
-        user = get_object_or_404(User, id=request_user.id)
-        user.delete()
-        return Response({"msg": "회원탈퇴 완료"}, status=status.HTTP_200_OK)
+        if delete_user(request.user.id):
+            return Response({"msg": "회원탈퇴 완료"}, status=status.HTTP_200_OK)
+        return Response({"msg": "유저가 존재하지 않습니다."})
 
 
 class UserView(APIView):

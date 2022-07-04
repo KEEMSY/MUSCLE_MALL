@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 from userapp.models import User
-from userapp.services.user_service import get_user, save_user
+from userapp.services.user_service import get_user, save_user, delete_user
 
 
 class TestUserService(TestCase):
@@ -36,3 +36,23 @@ class TestUserService(TestCase):
         # expect
         self.assertIsNotNone(User)
         self.assertEqual(data["username"], user["username"])
+
+    def test_delete_user(self):
+        # given
+        data = {
+            "username": "test_username",
+            "email": "test@email.com",
+            "password": "1234",
+            "fullname": "test_fullname",
+            "gender": "male"
+        }
+        target_username = save_user(**data)["username"]
+        target_user = User.objects.get(username=target_username)
+
+        # when
+        expect = delete_user(target_user.id)
+
+        # expect
+        self.assertEqual(True, expect)
+        with self.assertRaises(User.DoesNotExist):
+            User.objects.get(username=target_username)

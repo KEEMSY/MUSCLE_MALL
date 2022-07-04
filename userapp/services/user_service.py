@@ -36,3 +36,12 @@ def edit_user(user_id, **data):
         return True
     except ObjectDoesNotExist:
         return False
+
+
+def delete_user(user_id):
+    try:
+        user = User.objects.get(id=user_id)
+        user.delete()
+        return True
+    except ObjectDoesNotExist:
+        return False
