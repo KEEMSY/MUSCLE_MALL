@@ -20,6 +20,13 @@ def get_user(user_id=None):
         return False
 
 
+def save_user(**data):
+    user_serializer = UserSerializer(data=data)
+    user_serializer.is_valid(raise_exception=True)
+    user_serializer.save()
+    return user_serializer.data
+
+
 def edit_user(user_id, **data):
     try:
         user = User.objects.get(id=user_id)

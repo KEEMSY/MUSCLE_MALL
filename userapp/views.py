@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 
 from userapp.models import User, Coach
 from userapp.serializers import UserSerializer, CoachSerializer
-from userapp.services.user_service import get_user
+from userapp.services.user_service import get_user, save_user
 
 
 class UserApiView(APIView):
@@ -19,12 +19,11 @@ class UserApiView(APIView):
         if user:
             return Response(user, status=status.HTTP_200_OK)
         return Response({"msg": "유저가 존재하지 않습니다."}, status=status.HTTP_404_NOT_FOUND)
+
     # 회원가입 Done
     def post(self, request):
-        user_serializer = UserSerializer(data=request.data)
-        user_serializer.is_valid(raise_exception=True)
-        user_serializer.save()
-        return Response(user_serializer.data, status=status.HTTP_201_CREATED)
+        user = save_user(**request.data)
+        return Response(user, status=status.HTTP_201_CREATED)
 
     # 사용자 정보 수정 Done
     def put(self, request, user_id):
