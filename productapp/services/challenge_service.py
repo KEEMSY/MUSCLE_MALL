@@ -4,7 +4,7 @@ from django.db import transaction
 from productapp.models import Challenge, Routine
 from productapp.serializers import ChallengeSerializer
 from userapp.models import User
-from userapp.user_service import edit_user
+from userapp.services.user_service import edit_user
 
 
 def get_challenge(user, challenge_id=None):

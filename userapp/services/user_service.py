@@ -4,6 +4,22 @@ from userapp.models import User
 from userapp.serializers import UserSerializer
 
 
+def get_user(user_id=None):
+    if user_id:
+        try:
+            user = User.objects.get(id=user_id)
+            user_serializer = UserSerializer(user).data
+            return user_serializer
+        except ObjectDoesNotExist:
+            return False
+    try:
+        users = UserSerializer(User.objects.all(), many=True).data
+        return users
+
+    except ObjectDoesNotExist:
+        return False
+
+
 def edit_user(user_id, **data):
     try:
         user = User.objects.get(id=user_id)
