@@ -4,7 +4,6 @@ from userapp.models import User
 from userapp.serializers import UserSerializer
 
 
-# 테스트 작성해야함
 def get_user(user_id=None):
     if user_id:
         try:

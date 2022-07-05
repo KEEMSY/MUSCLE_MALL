@@ -7,8 +7,17 @@ from userapp.services.user_service import get_user, save_user, delete_user
 class TestUserService(TestCase):
     def test_get_user_when_user_id_is_exist(self):
         # given
-        user = User.objects.create(
-            username="test_username",
+        user1 = User.objects.create(
+            username="test_username1",
+            email="test@email.com",
+            password="1234",
+            fullname="test_fullname",
+            gender="male",
+            approved_user="True"
+        )
+
+        user2 = User.objects.create(
+            username="test_usernam2",
             email="test@email.com",
             password="1234",
             fullname="test_fullname",
@@ -17,11 +26,13 @@ class TestUserService(TestCase):
         )
 
         # when
-        user_id = user.id
+        user_id = user1.id
         expected_user = get_user(user_id)
+        expected_users = get_user()
 
         # expect
-        self.assertEqual(expected_user["username"], user.username)
+        self.assertEqual(expected_user["username"], user1.username)
+        self.assertEqual(2, len(expected_users))
 
     def test_save_user(self):
         # when
