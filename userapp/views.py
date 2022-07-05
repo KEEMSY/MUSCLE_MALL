@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from userapp.models import User, Coach
+from userapp.permissions.coach_permissions import IsAuthenticatedAndIsAprovedCoach
 from userapp.permissions.user_permissions import IsAuthenticatedAndIsAprovedUser
 from userapp.serializers import UserSerializer, CoachSerializer
 from userapp.services.user_service import get_user, save_user, delete_user, edit_user
@@ -15,6 +16,7 @@ from userapp.services.user_service import get_user, save_user, delete_user, edit
 
 class UserApiView(APIView):
     permission_classes = [IsAuthenticatedAndIsAprovedUser]
+
     # 사용자 정보 조회 Done
     def get(self, request, user_id=None):
         user = get_user(user_id)
@@ -58,7 +60,7 @@ class UserView(APIView):
 
 
 class CoachApiView(APIView):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticatedAndIsAprovedCoach]
 
     def get(self, request, user_id=None):
         if user_id:

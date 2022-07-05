@@ -6,7 +6,7 @@ from userapp.models import User, Coach
 class CoachSerializer(serializers.ModelSerializer):
     class Meta:
         model = Coach
-        fields = ["user", "nickname", "phone_number", "kind",]
+        fields = ["user", "nickname", "phone_number", "kind", "approved_coach"]
 
     def update(self, instance, validated_data):
         for key, value in validated_data.items():
