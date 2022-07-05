@@ -16,28 +16,11 @@ class CoachSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    # product_by_user = serializers.SerializerMethodField()
-
-    # def get_product_by_user(self, obj):
-    #     category_list = set()
-    #     for category in obj.product_set.all():
-    #         category_list.add(category.name)
-    #     return category_list
-    #
-    # interesting_category = serializers.SerializerMethodField()
-    #
-    # def get_interesting_category(self, obj):
-    #     category_list = set()
-    #     for product in obj.product_set.all():
-    #         for category in product.category.all():
-    #             category_list.add((category.name, category.kind))
-    #     return category_list
-    # "product_by_user", "interesting_category"
     coach = CoachSerializer(required=False)
 
     class Meta:
         model = User
-        fields = ["username", "email", "password", "fullname", "gender", "coach", "bind_number"]
+        fields = ["username", "email", "password", "fullname", "gender", "coach", "bind_number", "approved_user"]
 
         extra_kwargs = {
             "password": {'write_only': True},
