@@ -4,16 +4,28 @@ from userapp.models import User
 from userapp.serializers import UserSerializer
 
 
+# 테스트 작성해야함
 def get_user(user_id=None):
     if user_id:
         try:
             user = User.objects.get(id=user_id)
-            user_serializer = UserSerializer(user).data
-            return user_serializer
+            if user.approved_user:
+                user_serializer = UserSerializer(user).data
+                return user_serializer
+
+            return False
+
         except ObjectDoesNotExist:
             return False
     try:
-        users = UserSerializer(User.objects.all(), many=True).data
+        approved_user = []
+        users = User.objects.all()
+        for user in users:
+            if user.approved_user:
+                approved_user.append(user)
+
+        users = UserSerializer(approved_user, many=True).data
+
         return users
 
     except ObjectDoesNotExist:

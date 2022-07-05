@@ -12,7 +12,8 @@ class TestUserService(TestCase):
             email="test@email.com",
             password="1234",
             fullname="test_fullname",
-            gender="male"
+            gender="male",
+            approved_user="True"
         )
 
         # when
