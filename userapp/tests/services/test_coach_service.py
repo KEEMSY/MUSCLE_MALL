@@ -1,15 +1,17 @@
 from django.test import TestCase
 
 from userapp.models import User
-from userapp.services.coach_service import get_coach
+from userapp.services.coach_service import get_coach, save_coach
 
 
 class TestCoachService(TestCase):
-    coach_data = {
-        "nickname": "WeightKing",
-        "phone_number": "010-1234-1234",
-        "kind": "fitness"
-    }
+    def __init__(self, *args, **kwargs):
+        super(TestCoachService, self).__init__(*args, **kwargs)
+        self.coach_data = {
+            "nickname": "WeightKing",
+            "phone_number": "010-1234-1234",
+            "kind": "fitness"
+        }
 
     def make_user(self):
         user = User.objects.create(
@@ -33,10 +35,26 @@ class TestCoachService(TestCase):
         # expect
         self.assertEqual(0, len(coach))
 
-    # Coach 생성
-    def test_save_coach(self):
+    def test_save_coach_only_approved_user(self):
         # given
         user = self.make_user()
-        # sava_coach =
+        self.coach_data["user"] = user.id
+
         # when
+        coach = save_coach(**self.coach_data)
+
         # expect
+        self.assertEqual(self.coach_data["nickname"], coach["nickname"])
+
+    def test_can_not_save_coach_not_approved_user(self):
+        # given
+        user = self.make_user()
+        self.coach_data["user"] = user.id
+
+        # when
+        user.approved_user = False
+        user.save()
+        not_coach = save_coach(**self.coach_data)
+
+        # expect
+        self.assertEqual(False, not_coach)

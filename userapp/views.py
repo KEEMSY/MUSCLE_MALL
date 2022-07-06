@@ -10,7 +10,7 @@ from userapp.models import User, Coach
 from userapp.permissions.coach_permissions import IsAuthenticatedAndIsAprovedCoach
 from userapp.permissions.user_permissions import IsAuthenticatedAndIsAprovedUser
 from userapp.serializers import UserSerializer, CoachSerializer
-from userapp.services.coach_service import get_coach
+from userapp.services.coach_service import get_coach, save_coach
 from userapp.services.user_service import get_user, save_user, delete_user, edit_user
 
 
@@ -71,11 +71,11 @@ class CoachApiView(APIView):
 
     def post(self, request):
         request.data['user'] = request.user.id
+        coach = save_coach(**request.data)
+        if coach:
+            return Response(coach, status=status.HTTP_201_CREATED)
 
-        coach_serializer = CoachSerializer(data=request.data)
-        coach_serializer.is_valid(raise_exception=True)
-        coach_serializer.save()
-        return Response(coach_serializer.data, status=status.HTTP_201_CREATED)
+        return Response({"msg": "유저 심사 중에는 코치 등록이 불가능 합니다."}, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request):
         try:
