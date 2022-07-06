@@ -10,6 +10,7 @@ class GenericAPIException(APIException):
         self.status_code = status_code
         super().__init__(detail=detail, code=code)
 
+
 # 수정이 필요함
 class IsAuthenticatedAndIsAprovedCoach(BasePermission):
     ABAILIBLE_METHODS = ('GET', 'POST', 'DELETE')
@@ -25,9 +26,9 @@ class IsAuthenticatedAndIsAprovedCoach(BasePermission):
             }
             raise GenericAPIException(status_code=status.HTTP_401_UNAUTHORIZED, detail=response)
 
-        if not coach.user.approved_user or  not coach.approved_coach:
+        if not coach.approved_coach:
             response = {
-                "detail": "유저 승인 심사 중 입니다.",
+                "detail": "코치 승인 심사 중 입니다.",
             }
             raise GenericAPIException(status_code=status.HTTP_401_UNAUTHORIZED, detail=response)
 
