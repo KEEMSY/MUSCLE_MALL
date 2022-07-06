@@ -18,8 +18,6 @@ def get_user(user_id=None):
             return False
 
     try:
-        print("@@")
-
         approved_user = []
         users = User.objects.all()
         for user in users:
