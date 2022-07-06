@@ -22,6 +22,7 @@ class TestCoachService(TestCase):
         )
         return user
 
+    # Coach 조회
     def test_get_coach_when_coach_does_not_exist(self):
         # given
         user = self.make_user()
@@ -31,3 +32,11 @@ class TestCoachService(TestCase):
 
         # expect
         self.assertEqual(0, len(coach))
+
+    # Coach 생성
+    def test_save_coach(self):
+        # given
+        user = self.make_user()
+        # sava_coach =
+        # when
+        # expect

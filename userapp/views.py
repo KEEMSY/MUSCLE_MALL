@@ -10,6 +10,7 @@ from userapp.models import User, Coach
 from userapp.permissions.coach_permissions import IsAuthenticatedAndIsAprovedCoach
 from userapp.permissions.user_permissions import IsAuthenticatedAndIsAprovedUser
 from userapp.serializers import UserSerializer, CoachSerializer
+from userapp.services.coach_service import get_coach
 from userapp.services.user_service import get_user, save_user, delete_user, edit_user
 
 
@@ -62,22 +63,15 @@ class CoachApiView(APIView):
     permission_classes = [IsAuthenticatedAndIsAprovedCoach]
 
     def get(self, request, coach_id=None):
-        if coach_id:
-            try:
-                coach = Coach.objects.get(user_id=coach_id)
-                coach_serializer = CoachSerializer(coach).data
-                return Response(coach_serializer, status=status.HTTP_200_OK)
-            except ObjectDoesNotExist:
-                return Response({"msg": "존재하지 않는 코치입니다."}, status=status.HTTP_404_NOT_FOUND)
+        coach = get_coach(coach_id)
+        if coach:
+            return Response(coach, status=status.HTTP_200_OK)
 
-        coachs = Coach.objects.all()
-        if len(coachs):
-            coach_serializer = CoachSerializer(coachs, many=True).data
-            return Response(coach_serializer, status=status.HTTP_200_OK)
-        return Response({"msg": "현재 코치가 존재하지 않습니다."})
+        return Response({"msg": "존재하지 않는 코치입니다."}, status=status.HTTP_404_NOT_FOUND)
 
     def post(self, request):
         request.data['user'] = request.user.id
+
         coach_serializer = CoachSerializer(data=request.data)
         coach_serializer.is_valid(raise_exception=True)
         coach_serializer.save()

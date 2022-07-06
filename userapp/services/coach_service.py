@@ -1,6 +1,6 @@
 from django.core.exceptions import ObjectDoesNotExist
 
-from userapp.models import Coach
+from userapp.models import Coach, User
 from userapp.serializers import CoachSerializer
 
 
@@ -8,7 +8,7 @@ def get_coach(coach_id=None):
     if coach_id:
         try:
             coach = Coach.objects.get(id=coach_id)
-            if coach.approved_user:
+            if coach.approved_coach:
                 coach_serializer = CoachSerializer(coach).data
                 return coach_serializer
 
@@ -29,3 +29,14 @@ def get_coach(coach_id=None):
 
     except ObjectDoesNotExist:
         return False
+
+
+def save_coach(**data):
+    user = User.objects.get(id=data['user'])
+    if user.approved_user:
+        coach_serializer = CoachSerializer(data=data)
+        coach_serializer.is_valid(raise_exception=True)
+        coach_serializer.save()
+        return coach_serializer.data
+
+    return False
