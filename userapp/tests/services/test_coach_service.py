@@ -42,9 +42,10 @@ class TestCoachService(TestCase):
 
         # when
         coach = save_coach(**self.coach_data)
+        coach.pop("approved_coach")
 
         # expect
-        self.assertEqual(self.coach_data["nickname"], coach["nickname"])
+        self.assertEqual(self.coach_data, coach)
 
     def test_can_not_save_coach_not_approved_user(self):
         # given
