@@ -22,6 +22,9 @@ class IsAuthenticatedAndIsAprovedUser(BasePermission):
             }
             raise GenericAPIException(status_code=status.HTTP_401_UNAUTHORIZED, detail=response)
 
+        if user.is_authenticated and request.method in self.ABAILIBLE_METHODS:
+            return True
+
         if not user.approved_user:
             response = {
                 "detail": "유저 승인 심사 중 입니다.",
@@ -31,7 +34,6 @@ class IsAuthenticatedAndIsAprovedUser(BasePermission):
         if user.is_authenticated or user.is_admin:
             return True
 
-        if user.is_authenticated and request.method in self.ABAILIBLE_METHODS:
-            return True
+
 
         return False
