@@ -5,7 +5,7 @@ from userapp.services.user_service import get_user, save_user, delete_user
 
 
 class TestUserService(TestCase):
-    def test_get_user_when_user_id_is_exist(self):
+    def test_get_user_when_user_id_is_exist_or_not(self):
         # given
         user1 = User.objects.create(
             username="test_username1",

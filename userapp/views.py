@@ -3,7 +3,6 @@ from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 from rest_framework import status, permissions
-from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -62,10 +61,10 @@ class UserView(APIView):
 class CoachApiView(APIView):
     permission_classes = [IsAuthenticatedAndIsAprovedCoach]
 
-    def get(self, request, user_id=None):
-        if user_id:
+    def get(self, request, coach_id=None):
+        if coach_id:
             try:
-                coach = Coach.objects.get(user_id=user_id)
+                coach = Coach.objects.get(user_id=coach_id)
                 coach_serializer = CoachSerializer(coach).data
                 return Response(coach_serializer, status=status.HTTP_200_OK)
             except ObjectDoesNotExist:
