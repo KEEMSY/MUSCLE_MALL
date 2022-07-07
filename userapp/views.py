@@ -75,8 +75,6 @@ class CoachApiView(APIView):
         if coach:
             return Response(coach, status=status.HTTP_201_CREATED)
 
-        return Response({"msg": "유저 심사 중에는 코치 등록이 불가능 합니다."}, status=status.HTTP_400_BAD_REQUEST)
-
     def put(self, request):
         request.data['user'] = request.user.id
         coach = edit_coach(**request.data)
