@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from userapp.models import User, Coach
-from userapp.permissions.coach_permissions import IsAuthenticatedAndIsAprovedCoach
+from userapp.permissions.coach_permissions import  IsAuthenticatedrIsAdmin
 from userapp.permissions.user_permissions import IsAuthenticatedAndIsAprovedUser
 from userapp.serializers import UserSerializer, CoachSerializer
 from userapp.services.coach_service import get_coach, save_coach
@@ -60,7 +60,7 @@ class UserView(APIView):
 
 
 class CoachApiView(APIView):
-    permission_classes = [IsAuthenticatedAndIsAprovedCoach]
+    permission_classes = [IsAuthenticatedrIsAdmin]
 
     def get(self, request, coach_id=None):
         coach = get_coach(coach_id)

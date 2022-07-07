@@ -12,38 +12,19 @@ class GenericAPIException(APIException):
         super().__init__(detail=detail, code=code)
 
 
-class IsAuthenticatedAndIsAprovedCoach(BasePermission):
-    ABAILIBLE_METHODS = ('GET', 'POST', 'DELETE')
+class IsAuthenticatedrIsAdmin(BasePermission):
+    AVAILABLE_METHODS = ('GET', 'POST', 'DELETE')
     message = '접근 권한이 없습니다.'
 
     def has_permission(self, request, view):
-        user = User.objects.get(id=request.user.id)
 
-        if not user.is_authenticated:
+        if not request.user.is_authenticated:
             response = {
                 "detail": "서비스를 이용하기 위해 로그인 해주세요.",
             }
-            raise GenericAPIException(status_code=status.HTTP_401_UNAUTHORIZED, detail=response)
+            raise GenericAPIException(status_code=status.HTTP_400_BAD_REQUEST, detail=response)
 
-        try:
-            coach = Coach.objects.get(user_id=user.id)
-            if not coach.approved_coach:
-                response = {
-                    "detail": "코치 승인 심사 중 입니다.",
-                }
-                raise GenericAPIException(status_code=status.HTTP_401_UNAUTHORIZED, detail=response)
-
-            if coach.approved_coach or coach.user.is_admin:
-                return True
-
-            return False
-
-        except Exception:
-            if request.method in self.ABAILIBLE_METHODS or user.is_admin:
-                return True
-
-            return False
-
-
-
+        return bool(
+                request.method in self.AVAILABLE_METHODS or request.user.is_admin and request.user
+        )
 
