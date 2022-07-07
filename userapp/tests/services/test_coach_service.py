@@ -39,7 +39,7 @@ class TestCoachService(TestCase):
         # expect
         self.assertEqual(0, len(coach))
 
-    def test_save_coach_only_approved_user(self):
+    def test_save_coach(self):
         # given
         user = self.make_user()
         self.coach_data["user"] = user.id
@@ -50,18 +50,7 @@ class TestCoachService(TestCase):
         # expect
         self.assertEqual(self.coach_data, coach)
 
-    def test_can_not_save_coach_not_approved_user(self):
-        # given
-        user = self.make_user()
-        self.coach_data["user"] = user.id
 
-        # when
-        user.approved_user = False
-        user.save()
-        not_coach = save_coach(**self.coach_data)
-
-        # expect
-        self.assertEqual(False, not_coach)
 
     def test_edit_coach_only_approved_coach(self):
         # given
