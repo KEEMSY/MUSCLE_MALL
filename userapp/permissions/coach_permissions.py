@@ -18,9 +18,9 @@ class IsAuthenticatedrIsAdmin(BasePermission):
 
     def has_permission(self, request, view):
 
-        if not request.user.is_authenticated:
+        if not request.user.is_authenticatedv or not request.user.approved_user:
             response = {
-                "detail": "서비스를 이용하기 위해 로그인 해주세요.",
+                "detail": "서비스는 유저만 이용 가능합니다.",
             }
             raise GenericAPIException(status_code=status.HTTP_400_BAD_REQUEST, detail=response)
 

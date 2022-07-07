@@ -35,14 +35,12 @@ def get_coach(coach_id=None):
 
 def save_coach(**data):
     user = User.objects.get(id=data['user'])
-    if not user.approved_user:
-        response = {
-            "detail": "유저 심사 중입니다.",
-        }
-        raise GenericAPIException(status_code=status.HTTP_400_BAD_REQUEST, detail=response)
 
     coach_serializer = CoachSerializer(data=data)
     coach_serializer.is_valid(raise_exception=True)
     coach_serializer.save()
 
     return coach_serializer.data
+
+
+
