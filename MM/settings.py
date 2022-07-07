@@ -20,16 +20,10 @@ env = environ.Env(
     # set casting, default value
     DEBUG=(bool, False),
     SECRET_KEY=(str, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
-    DATABASES={
-        "default": {
-            "ENGINE": "django.db.backends.mysql",
-            "NAME": "TEMP",
-            "USER": "TEMP",
-            "PASSWORD": "1234",
-            "HOST": "localhost",
-            "PORT": "3306",
-        }
-    }
+    DB_NAME=(str, ''),
+    DB_USER=(str, ''),
+    DB_PASSWORD=(str, '')
+
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
