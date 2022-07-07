@@ -24,7 +24,9 @@ class IsAuthenticatedrIsAdmin(BasePermission):
             }
             raise GenericAPIException(status_code=status.HTTP_400_BAD_REQUEST, detail=response)
 
-        return bool(
-                request.method in self.AVAILABLE_METHODS or request.user.is_admin and request.user
-        )
+        if request.user.is_authenticated and request.method in self.AVAILABLE_METHODS:
+            return True
+
+        if request.user.is_admin and request.user:
+            return True
 

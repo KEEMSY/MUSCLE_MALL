@@ -7,6 +7,10 @@ class CoachSerializer(serializers.ModelSerializer):
     class Meta:
         model = Coach
         fields = ["user", "nickname", "phone_number", "kind", "approved_coach"]
+        extra_kwargs = {
+            "approved_coach": {'write_only': True},
+
+        }
 
     def update(self, instance, validated_data):
         for key, value in validated_data.items():
