@@ -16,14 +16,14 @@ class IsAuthenticatedAndIsAprovedUser(BasePermission):
     def has_permission(self, request, view):
         user = request.user
 
+        if user.is_authenticated or request.method in self.ABAILIBLE_METHODS:
+            return True
+
         if not user.is_authenticated:
             response = {
                 "detail": "서비스를 이용하기 위해 로그인 해주세요.",
             }
             raise GenericAPIException(status_code=status.HTTP_401_UNAUTHORIZED, detail=response)
-
-        if user.is_authenticated and request.method in self.ABAILIBLE_METHODS:
-            return True
 
         if not user.approved_user:
             response = {

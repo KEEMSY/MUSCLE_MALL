@@ -10,7 +10,7 @@ from userapp.models import User, Coach
 from userapp.permissions.coach_permissions import  IsAuthenticatedrIsAdmin
 from userapp.permissions.user_permissions import IsAuthenticatedAndIsAprovedUser
 from userapp.serializers import UserSerializer, CoachSerializer
-from userapp.services.coach_service import get_coach, save_coach, edit_coach
+from userapp.services.coach_service import get_coach, save_coach, edit_coach, delete_coach
 from userapp.services.user_service import get_user, save_user, delete_user, edit_user
 
 
@@ -81,10 +81,6 @@ class CoachApiView(APIView):
         return Response(coach, status=status.HTTP_200_OK)
 
     def delete(self, request):
-        try:
-            coach = Coach.objects.get(user=request.user)
-            coach.delete()
+        if delete_coach(request.user.id):
             return Response({"msg": "삭제되었습니다."}, status=status.HTTP_200_OK)
 
-        except ObjectDoesNotExist:
-            return Response({"msg": "코치가 존재하지 않습니다."}, status=status.HTTP_400_BAD_REQUEST)

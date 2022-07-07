@@ -65,3 +65,16 @@ def edit_coach(**data):
             "detail": "코치 승인 심사 중 입니다.",
         }
         raise GenericAPIException(status_code=status.HTTP_404_NOT_FOUND, detail=response)
+
+
+def delete_coach(user):
+    try:
+        coach = Coach.objects.get(user=user)
+        coach.delete()
+        return True
+
+    except ObjectDoesNotExist:
+        response = {
+            "detail": "해당 코치정보가 존재하지 않습니다.",
+        }
+        raise GenericAPIException(status_code=status.HTTP_404_NOT_FOUND, detail=response)

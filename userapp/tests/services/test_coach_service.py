@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 from userapp.models import User, Coach
-from userapp.services.coach_service import get_coach, save_coach, edit_coach
+from userapp.services.coach_service import get_coach, save_coach, edit_coach, delete_coach
 
 
 class TestCoachService(TestCase):
@@ -84,3 +84,17 @@ class TestCoachService(TestCase):
 
         # expect
         self.assertEqual(self.coach_update_data["nickname"], update_coach["nickname"])
+
+    def test_delete_coach(self):
+        # give
+        user = self.make_user()
+        coach_data = self.coach_data
+        coach_data["user"] = user.id
+        save_coach(**coach_data)
+
+        # when
+        delete_coach(user)
+
+        # expect
+        with self.assertRaises(Coach.DoesNotExist):
+            Coach.objects.get(user=user)
