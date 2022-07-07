@@ -28,7 +28,6 @@ class TestCoachService(TestCase):
         )
         return user
 
-
     # Coach 조회
     def test_get_coach_when_coach_does_not_exist(self):
         # given
@@ -47,7 +46,6 @@ class TestCoachService(TestCase):
 
         # when
         coach = save_coach(**self.coach_data)
-        coach.pop("approved_coach")
 
         # expect
         self.assertEqual(self.coach_data, coach)
