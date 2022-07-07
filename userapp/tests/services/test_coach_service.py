@@ -1,7 +1,7 @@
 from django.test import TestCase
 
-from userapp.models import User
-from userapp.services.coach_service import get_coach, save_coach
+from userapp.models import User, Coach
+from userapp.services.coach_service import get_coach, save_coach, edit_coach
 
 
 class TestCoachService(TestCase):
@@ -11,6 +11,10 @@ class TestCoachService(TestCase):
             "nickname": "WeightKing",
             "phone_number": "010-1234-1234",
             "kind": "fitness"
+        }
+
+        self.coach_update_data = {
+            "nickname": "WeightQueen"
         }
 
     def make_user(self):
@@ -23,6 +27,7 @@ class TestCoachService(TestCase):
             approved_user="True"
         )
         return user
+
 
     # Coach 조회
     def test_get_coach_when_coach_does_not_exist(self):
@@ -59,3 +64,23 @@ class TestCoachService(TestCase):
 
         # expect
         self.assertEqual(False, not_coach)
+
+    def test_edit_coach_only_approved_coach(self):
+        # given
+        user = self.make_user()
+
+        coach_data = self.coach_data
+        coach_data["user"] = user.id
+        save_coach(**coach_data)
+
+        coach = Coach.objects.get(user=user)
+        coach.approved_coach = True
+        coach.save()
+
+        # when
+        coach_update_data = self.coach_update_data
+        coach_update_data["user"] = user.id
+        update_coach = edit_coach(**coach_update_data)
+
+        # expect
+        self.assertEqual(self.coach_update_data["nickname"], update_coach["nickname"])
