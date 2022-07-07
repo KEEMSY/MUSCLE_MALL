@@ -19,7 +19,17 @@ import pymysql as pymysql
 env = environ.Env(
     # set casting, default value
     DEBUG=(bool, False),
-    SECRET_KEY=(str, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+    SECRET_KEY=(str, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
+    DATABASES={
+        "default": {
+            "ENGINE": "django.db.backends.mysql",
+            "NAME": "TEMP",
+            "USER": "TEMP",
+            "PASSWORD": "1234",
+            "HOST": "localhost",
+            "PORT": "3306",
+        }
+    }
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
