@@ -49,7 +49,7 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ('name', 'category', 'difficulty')
     readonly_fields = ('category', 'user')
     fieldsets = (
-        ("info", {'fields': ('user', 'name', 'description', 'difficulty')}),
+        ("info", {'fields': ('user', 'name', 'description', 'category', 'difficulty')}),
     )
 
     def get_readonly_fields(self, request, obj=None):
@@ -64,7 +64,17 @@ class RoutineAdmin(admin.ModelAdmin):
 
 
 class ChallengeAdmin(admin.ModelAdmin):
-    list_display = ['user', 'status']
+    list_display = ['user', 'product', 'status']
+    readonly_fields = ('product', 'user')
+    fieldsets = (
+        ("info", {'fields': ('user', 'product', 'status')}),
+    )
+
+    def get_readonly_fields(self, request, obj=None):
+        if obj:
+            return ('product', 'user')
+        else:
+            return ('product',)
 
 
 admin.site.register(ProductCategory, ProductCategoryAdmin)
