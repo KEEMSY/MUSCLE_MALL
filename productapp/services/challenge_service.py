@@ -4,7 +4,7 @@ from django.db import transaction
 from productapp.models import Challenge, Routine
 from productapp.serializers import ChallengeSerializer
 from userapp.models import User
-from userapp.user_service import edit_user
+from userapp.services.user_service import edit_user
 
 
 def get_challenge(user, challenge_id=None):
@@ -38,8 +38,7 @@ def save_challenge(user_id):
         }
 
         for routine in routines:
-            data["routine"] = routine.id
-            print("f_data", data)
+            data["product"] = routine.product.id
             challenge_serializer = ChallengeSerializer(data=data)
 
             challenge_serializer.is_valid(raise_exception=True)

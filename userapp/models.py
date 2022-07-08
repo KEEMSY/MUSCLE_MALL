@@ -39,6 +39,7 @@ class User(AbstractBaseUser):
     join_date = models.DateTimeField("가입일", auto_now_add=True)
     gender = models.CharField("성별", max_length=80, choices=GENDER_CHOICES, null=True)
     bind_number = models.IntegerField(default=1, null=True)
+    approved_user = models.BooleanField(default=False)
 
     is_active = models.BooleanField(default=True)
 
@@ -74,4 +75,5 @@ class Coach(models.Model):
     nickname = models.CharField("닉네임", max_length=50)
     phone_number = models.CharField("전화번호", max_length=20)
     created_at = models.DateTimeField(auto_now_add=True)
+    approved_coach = models.BooleanField(default=False)
     kind = models.CharField("전문 분야", choices=KIND, null=False, max_length=20)
