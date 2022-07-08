@@ -38,8 +38,7 @@ def save_challenge(user_id):
         }
 
         for routine in routines:
-            data["routine"] = routine.id
-            print("f_data", data)
+            data["product"] = routine.product.id
             challenge_serializer = ChallengeSerializer(data=data)
 
             challenge_serializer.is_valid(raise_exception=True)
