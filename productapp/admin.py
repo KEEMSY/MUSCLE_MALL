@@ -33,6 +33,9 @@ class ProductDetailCategoryAdmin(admin.ModelAdmin):
     inlines = (
         ProductInline,
     )
+    fieldsets = (
+        ("info", {'fields': ('name', 'description', 'category')}),
+    )
 
     def get_readonly_fields(self, request, obj=None):
         if obj:
@@ -56,8 +59,16 @@ class ProductAdmin(admin.ModelAdmin):
             return ('category',)
 
 
+class RoutineAdmin(admin.ModelAdmin):
+    list_display = ['user', 'product', 'quantity']
+
+
+class ChallengeAdmin(admin.ModelAdmin):
+    list_display = ['user', 'status']
+
+
 admin.site.register(ProductCategory, ProductCategoryAdmin)
 admin.site.register(ProductDetailCategory, ProductDetailCategoryAdmin)
 admin.site.register(Product, ProductAdmin)
-admin.site.register(Routine)
-admin.site.register(Challenge)
+admin.site.register(Routine, RoutineAdmin)
+admin.site.register(Challenge, ChallengeAdmin)
