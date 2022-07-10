@@ -48,8 +48,13 @@
 <hr>
 
 ### `productapp`
+`permission`
+- IsAdminOrReadOnly 을 통한 권한 설정
+
 `ProductCategory`
-- @
+- 대범주 카테고리 생성, 수정, 삭제
+- ProductCategorySerializer를 통한 직렬화 
+
 <br>
 
 `ProductDetailCategory`
