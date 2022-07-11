@@ -1,5 +1,7 @@
 from django.urls import path
 
-urlpatterns = [
+from communityapp import views
 
+urlpatterns = [
+    path('category/', views.BoardCategoryApiView.as_view()),
 ]

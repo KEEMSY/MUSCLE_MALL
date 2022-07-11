@@ -12,4 +12,4 @@ class BoardCategorySerializer(serializers.ModelSerializer):
 class BoardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Board
-        fields = ['category', 'title', 'content', 'created_at']
+        fields = ['category', 'user', 'title', 'content', 'created_at']
