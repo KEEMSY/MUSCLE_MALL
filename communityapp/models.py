@@ -2,6 +2,9 @@ from django.db import models
 
 
 # Create your models here.
+from userapp.models import User
+
+
 class BoardCategory(models.Model):
     KIND = {
         ("Notice", "Notice"),
@@ -15,6 +18,7 @@ class BoardCategory(models.Model):
 
 
 class Board(models.Model):
+    user = models.ForeignKey(User, related_name="user", on_delete=models.CASCADE)
     category = models.ForeignKey(BoardCategory, related_name="category", on_delete=models.SET_NULL, null=True)
 
     title = models.CharField(max_length=50)
