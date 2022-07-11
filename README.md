@@ -50,33 +50,42 @@
 ### `productapp`
 `permission`
 - IsAdminOrReadOnly 을 통한 권한 설정
+<br>
 
 `ProductCategory`
-- 대범주 카테고리 생성, 수정, 삭제
+- 대 분류 카테고리 생성, 조회, 수정, 삭제
 - ProductCategorySerializer를 통한 직렬화 
 
 <br>
 
 `ProductDetailCategory`
-- @
+- 소 분류 카테고리 생성, 조회, 수정, 삭제
+- ProductDetailCategorySerializer를 통한 직렬화
+
 <br>
 
 `Product`
-- @
+- ProductCategory / ProductDetailCategory 에 속하는 product의 생성, 조회, 수정, 삭제
+- ProductSerializer를 통한 직렬화
 <br>
 
 `Routine`
-- @
+- IsAuthenticatedOrReadOnly를 통한 권한 설정
+- 원하는 Product 를 담아 Routine 생성, 조회, 수정, 삭제
+- RoutineSerializer를 통한 직렬화
 <br>
 
 `Challenge`
-- @
+- 원하는 Product로 구성된 Routine을 통한 Challenge 생성, 조회, 수정, 삭제
+- ChallengeSerializer를 통한 직렬화
+
 <br>
 
 <hr>
 
 <div align=center>
     <p>
-
+      <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FKEEMSY%2FMUSCLE_MALL%2F&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=%EB%B0%A9%EB%AC%B8%EC%9E%90&edge_flat=false"/>
+      </a>
     </p>
 </div>
