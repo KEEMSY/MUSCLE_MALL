@@ -50,3 +50,16 @@ def edit_board_category(category_id, **data):
             "detail": "해당 카테고리가 존재하지 않습니다.",
         }
         raise GenericAPIException(status_code=status.HTTP_404_NOT_FOUND, detail=response)
+
+
+def delete_board_category(category_id):
+    try:
+        category = BoardCategory.objects.get(id=category_id)
+        category.delete()
+        return True
+    except ObjectDoesNotExist:
+        response = {
+            "detail": "해당 카테고리가 존재하지 않습니다.",
+        }
+        raise GenericAPIException(status_code=status.HTTP_404_NOT_FOUND, detail=response)
+

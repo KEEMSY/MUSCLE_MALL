@@ -2,7 +2,8 @@ from django.test import TestCase
 
 from MM.api_exception import GenericAPIException
 from communityapp.models import BoardCategory
-from communityapp.services.board_service import get_board_category, save_board_category, edit_board_category
+from communityapp.services.board_service import get_board_category, save_board_category, edit_board_category, \
+    delete_board_category
 
 
 class TestBoardCategoryService(TestCase):
@@ -72,3 +73,14 @@ class TestBoardCategoryService(TestCase):
         # expect
         self.assertEqual(update_category["kind"], self.board_update_data["kind"])
         self.assertEqual(update_category["description"], self.board_update_data["description"])
+
+    def test_delete_board_category(self):
+        # give
+        board_category = self.make_categories()[1].id
+
+        # when
+        delete_board_category(board_category)
+
+        # expect
+        with self.assertRaises(BoardCategory.DoesNotExist):
+            BoardCategory.objects.get(id=board_category)
