@@ -8,7 +8,7 @@ from userapp.models import User
 class BoardCategory(models.Model):
     KIND = {
         ("Notice", "Notice"),
-        ("free", "Free"),
+        ("Free", "Free"),
     }
     kind = models.CharField("종류", choices=KIND, null=False, max_length=20)
     description = models.CharField("설명", max_length=256)
