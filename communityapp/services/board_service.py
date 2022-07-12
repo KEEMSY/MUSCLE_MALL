@@ -35,3 +35,18 @@ def save_board_category(**data):
     board_category.is_valid(raise_exception=True)
     board_category.save()
     return board_category.data
+
+
+def edit_board_category(category_id, **data):
+    try:
+        category = BoardCategory.objects.get(id=category_id)
+        board_category_serializer = BoardCategorySerializer(category, data=data, partial=True)
+        board_category_serializer.is_valid(raise_exception=True)
+        board_category_serializer.save()
+        return board_category_serializer.data
+
+    except ObjectDoesNotExist:
+        response = {
+            "detail": "해당 카테고리가 존재하지 않습니다.",
+        }
+        raise GenericAPIException(status_code=status.HTTP_404_NOT_FOUND, detail=response)
