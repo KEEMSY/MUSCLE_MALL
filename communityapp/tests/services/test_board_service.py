@@ -10,7 +10,7 @@ class TestBoardCategoryService(TestCase):
     def __init__(self, *args, **kwargs):
         super(TestBoardCategoryService, self).__init__(*args, **kwargs)
         self.board_data = {
-            "kind": "free",
+            "kind": "Free",
             "description": "free_desc"
         }
 
