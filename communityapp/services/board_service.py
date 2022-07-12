@@ -19,11 +19,11 @@ def get_board_category(category_id=None):
             raise GenericAPIException(status_code=status.HTTP_404_NOT_FOUND, detail=response)
 
     else:
-        try:
-            categories = BoardCategory.objects.all()
+        categories = BoardCategory.objects.all()
+        if len(categories):
             categories_serializer = BoardCategorySerializer(categories, many=True).data
             return categories_serializer
-        except ObjectDoesNotExist:
+        else:
             response = {
                 "detail": "해당 카테고리가 존재하지 않습니다.",
             }
