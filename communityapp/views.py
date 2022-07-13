@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 
 from communityapp.services.board_category_service import get_board_category, save_board_category, edit_board_category, \
     delete_board_category
-from communityapp.services.board_service import get_board, save_board
+from communityapp.services.board_service import get_board, save_board, edit_board
 
 
 class BoardCategoryApiView(APIView):
@@ -45,8 +45,10 @@ class BoardApiView(APIView):
         board = save_board(**request.data)
         return Response(board, status=status.HTTP_201_CREATED)
 
-    def put(self, request):
-        return Response({"msg": "put method"})
+    def put(self, request, board_id):
+        request.data['user'] = request.user.id
+        board = edit_board(board_id, **request.data)
+        return Response(board, status=status.HTTP_200_OK)
 
     def delete(self, request):
         return Response({"msg": "delete method"})

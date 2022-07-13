@@ -26,11 +26,10 @@ def get_board(category_kind=None, board_id=None):
 
         board_serializer = BoardSerializer(boards_in_category, many=True)
         return board_serializer.data
-
-    all_boards = Board.objects.all()
-    board_serializer = BoardSerializer(all_boards, many=True)
-
-    return board_serializer.data
+    response = {
+        "detail": "올바르지 못한 접근 입니다.",
+    }
+    raise GenericAPIException(status_code=status.HTTP_400_BAD_REQUEST, detail=response)
 
 
 def save_board(**data):
