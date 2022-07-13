@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 
 from communityapp.services.board_category_service import get_board_category, save_board_category, edit_board_category, \
     delete_board_category
+from communityapp.services.board_service import get_board
 
 
 class BoardCategoryApiView(APIView):
@@ -32,8 +33,12 @@ class BoardCategoryApiView(APIView):
 class BoardApiView(APIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-    def get(self, request):
-        return Response({"msg": "get method"})
+    def get(self, request, category_id=None, board_id=None):
+        board = get_board(category_id=None, board_id=None)
+        if not len(board):
+            return Response({'msg': '게시글이 존재하지 않습니다.'}, status=status.HTTP_404_NOT_FOUND)
+
+        return Response(board, status=status.HTTP_200_OK)
 
     def post(self, request):
         return Response({"msg": "post method"})

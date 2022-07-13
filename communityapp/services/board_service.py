@@ -1,5 +1,8 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
+from rest_framework import status
 
+from MM.api_exception import GenericAPIException
 from communityapp.models import Board
 from communityapp.serializers import BoardSerializer
 
@@ -10,12 +13,21 @@ def get_board(category_id=None, board_id=None):
             Q(category=category_id)
         )
         if board_id:
-            boards_in_category = boards_in_category.get(id=board_id)
-            board_serializer = BoardSerializer(boards_in_category)
-            return board_serializer.data
+            try:
+                boards_in_category = boards_in_category.get(id=board_id)
+                board_serializer = BoardSerializer(boards_in_category)
+                return board_serializer.data
+
+            except ObjectDoesNotExist:
+                response = {
+                    "detail": "해당 게시글이 존재하지 않습니다.",
+                }
+                raise GenericAPIException(status_code=status.HTTP_404_NOT_FOUND, detail=response)
 
         board_serializer = BoardSerializer(boards_in_category, many=True)
         return board_serializer.data
 
     all_boards = Board.objects.all()
-    return all_boards
+    board_serializer = BoardSerializer(all_boards, many=True)
+
+    return board_serializer.data
