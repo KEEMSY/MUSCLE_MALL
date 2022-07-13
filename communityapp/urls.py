@@ -10,5 +10,5 @@ urlpatterns = [
     path('<str:category_kind>/board/', views.BoardApiView.as_view()),
     path('<str:category_kind>/board/<int:board_id>/', views.BoardApiView.as_view()),
     # 게시글 생성
-    path('board/', views.BoardApiView.as_view())
+    path('board/', views.BoardApiView.as_view()),
 ]
