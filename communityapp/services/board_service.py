@@ -7,13 +7,12 @@ from communityapp.models import Board
 from communityapp.serializers import BoardSerializer
 
 
-def get_board(category_id=None, board_id=None):
-    if category_id:
+def get_board(category_kind=None, board_id=None):
+    if category_kind:
         boards_in_category = Board.objects.filter(
-            Q(category=category_id)
+            Q(category__kind__icontains=category_kind)
         )
-
-        if board_id:
+        if board_id:회
             try:
                 boards_in_category = boards_in_category.get(id=board_id)
                 board_serializer = BoardSerializer(boards_in_category)

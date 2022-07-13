@@ -33,8 +33,8 @@ class BoardCategoryApiView(APIView):
 class BoardApiView(APIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-    def get(self, request, category_id=None, board_id=None):
-        board = get_board(category_id, board_id)
+    def get(self, request, category_kind=None, board_id=None):
+        board = get_board(category_kind, board_id)
         if not len(board):
             return Response({'msg': '게시글이 존재하지 않습니다.'}, status=status.HTTP_404_NOT_FOUND)
 

@@ -61,8 +61,8 @@ class TestBoardCategoryService(TestCase):
         )
 
         # when
-        target_board = get_board(categorise[0].id, test_board1.id)
-        target_boards = get_board(categorise[0].id)
+        target_board = get_board(categorise[0].kind, test_board1.id)
+        target_boards = get_board(categorise[0].kind)
         boards = get_board()
 
         # expect
