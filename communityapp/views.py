@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 
 from communityapp.services.board_category_service import get_board_category, save_board_category, edit_board_category, \
     delete_board_category
-from communityapp.services.board_service import get_board, save_board, edit_board
+from communityapp.services.board_service import get_board, save_board, edit_board, delete_board
 
 
 class BoardCategoryApiView(APIView):
@@ -50,5 +50,6 @@ class BoardApiView(APIView):
         board = edit_board(board_id, **request.data)
         return Response(board, status=status.HTTP_200_OK)
 
-    def delete(self, request):
-        return Response({"msg": "delete method"})
+    def delete(self, request, board_id):
+        delete_board(request.user.id, board_id)
+        return Response({"msg": "게시글이 삭제되었습니다."}, status=status.HTTP_200_OK)
