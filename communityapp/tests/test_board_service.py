@@ -68,12 +68,12 @@ class TestBoardCategoryService(TestCase):
         # when
         target_board = get_board(categorise[0].kind, test_board1.id)
         target_boards = get_board(categorise[0].kind)
-        boards = get_board()
 
         # expect
         self.assertEqual(target_board["title"], 'test_title')
         self.assertEqual(len(target_boards), 1)
-        self.assertEqual(len(boards), 2)
+        with self.assertRaises(GenericAPIException):
+            get_board()
 
     def test_save_board(self):
         # give
