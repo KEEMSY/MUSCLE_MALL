@@ -2,7 +2,7 @@ from django.test import TestCase
 
 from MM.api_exception import GenericAPIException
 from communityapp.models import BoardCategory
-from communityapp.services.board_service import get_board_category, save_board_category, edit_board_category, \
+from communityapp.services.board_category_service import get_board_category, save_board_category, edit_board_category, \
     delete_board_category
 
 

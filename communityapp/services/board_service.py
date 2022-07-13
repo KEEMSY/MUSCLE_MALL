@@ -1,65 +1,21 @@
-from django.core.exceptions import ObjectDoesNotExist
-from rest_framework import status
+from django.db.models import Q
 
-from MM.api_exception import GenericAPIException
-from communityapp.models import BoardCategory
-from communityapp.serializers import BoardCategorySerializer
+from communityapp.models import Board
+from communityapp.serializers import BoardSerializer
 
 
-def get_board_category(category_id=None):
+def get_board(category_id=None, board_id=None):
     if category_id:
-        try:
-            category = BoardCategory.objects.get(id=category_id)
-            category_serializer = BoardCategorySerializer(category).data
-            return category_serializer
-        except ObjectDoesNotExist:
-            response = {
-                "detail": "해당 카테고리가 존재하지 않습니다.",
-            }
-            raise GenericAPIException(status_code=status.HTTP_404_NOT_FOUND, detail=response)
+        boards_in_category = Board.objects.filter(
+            Q(category=category_id)
+        )
+        if board_id:
+            boards_in_category = boards_in_category.get(id=board_id)
+            board_serializer = BoardSerializer(boards_in_category)
+            return board_serializer.data
 
-    else:
-        categories = BoardCategory.objects.all()
-        if len(categories):
-            categories_serializer = BoardCategorySerializer(categories, many=True).data
-            return categories_serializer
-        else:
-            response = {
-                "detail": "해당 카테고리가 존재하지 않습니다.",
-            }
-            raise GenericAPIException(status_code=status.HTTP_404_NOT_FOUND, detail=response)
+        board_serializer = BoardSerializer(boards_in_category, many=True)
+        return board_serializer.data
 
-
-def save_board_category(**data):
-    board_category = BoardCategorySerializer(data=data)
-    board_category.is_valid(raise_exception=True)
-    board_category.save()
-    return board_category.data
-
-
-def edit_board_category(category_id, **data):
-    try:
-        category = BoardCategory.objects.get(id=category_id)
-        board_category_serializer = BoardCategorySerializer(category, data=data, partial=True)
-        board_category_serializer.is_valid(raise_exception=True)
-        board_category_serializer.save()
-        return board_category_serializer.data
-
-    except ObjectDoesNotExist:
-        response = {
-            "detail": "해당 카테고리가 존재하지 않습니다.",
-        }
-        raise GenericAPIException(status_code=status.HTTP_404_NOT_FOUND, detail=response)
-
-
-def delete_board_category(category_id):
-    try:
-        category = BoardCategory.objects.get(id=category_id)
-        category.delete()
-        return True
-    except ObjectDoesNotExist:
-        response = {
-            "detail": "해당 카테고리가 존재하지 않습니다.",
-        }
-        raise GenericAPIException(status_code=status.HTTP_404_NOT_FOUND, detail=response)
-
+    all_boards = Board.objects.all()
+    return all_boards
