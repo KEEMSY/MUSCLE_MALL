@@ -54,9 +54,9 @@ def edit_board(board_id, **data):
         raise GenericAPIException(status_code=status.HTTP_404_NOT_FOUND, detail=response)
 
 
-def delete_board(board_id):
+def delete_board(board_id, user_id):
     try:
-        board = Board.objects.get(id=board_id)
+        board = Board.objects.get(id=board_id, user_id=user_id)
         board.delete()
         return True
 

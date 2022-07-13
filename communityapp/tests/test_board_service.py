@@ -115,11 +115,11 @@ class TestBoardCategoryService(TestCase):
         board = Board.objects.create(**board_data)
 
         # when
-        delete_board(board.id)
+        delete_board(board.id, user.id)
 
         # expect
         with self.assertRaises(Board.DoesNotExist):
             Board.objects.get(id=board.id)
 
         with self.assertRaises(GenericAPIException):
-            delete_board(board.id)
+            delete_board(board.id,user.id)
