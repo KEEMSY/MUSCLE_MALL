@@ -12,6 +12,7 @@ def get_board(category_id=None, board_id=None):
         boards_in_category = Board.objects.filter(
             Q(category=category_id)
         )
+
         if board_id:
             try:
                 boards_in_category = boards_in_category.get(id=board_id)
