@@ -31,3 +31,10 @@ def get_board(category_id=None, board_id=None):
     board_serializer = BoardSerializer(all_boards, many=True)
 
     return board_serializer.data
+
+
+def save_board(**data):
+    board_serializer = BoardSerializer(data=data)
+    board_serializer.is_valid(raise_exception=True)
+    board_serializer.save()
+    return board_serializer.data
