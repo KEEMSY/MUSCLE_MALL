@@ -53,3 +53,19 @@ class BoardApiView(APIView):
     def delete(self, request, board_id):
         delete_board(request.user.id, board_id)
         return Response({"msg": "게시글이 삭제되었습니다."}, status=status.HTTP_200_OK)
+
+
+class CommentApiView(APIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get(self, request):
+        return Response({"msg": "get_method"})
+
+    def post(self, request):
+        return Response({"msg": "post_method"})
+
+    def put(self, request):
+        return Response({"msg": "put_method"})
+
+    def delete(self, request):
+        return Response({"msg": "delete_method"})
