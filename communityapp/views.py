@@ -59,9 +59,9 @@ class BoardApiView(APIView):
 class CommentApiView(APIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-    def get(self, request):
-        comment = get_comment()
-        return Response({"msg": "get_method"})
+    def get(self, request, comment_id=None):
+        comment = get_comment(request.user.id, comment_id)
+        return Response(comment, status=status.HTTP_200_OK)
 
     def post(self, request):
         return Response({"msg": "post_method"})
