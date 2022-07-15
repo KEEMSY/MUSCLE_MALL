@@ -21,3 +21,10 @@ def get_comment(user_id, comment_id=None):
 
     comments_serializer = CommentSerializer(comments, many=True)
     return comments_serializer.data
+
+
+def save_comment(**data):
+    comment_serializer = CommentSerializer(data=data)
+    comment_serializer.is_valid(raise_exception=True)
+    comment_serializer.save()
+    return comment_serializer.data

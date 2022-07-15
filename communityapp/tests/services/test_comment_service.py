@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 from communityapp.models import BoardCategory, Board, Comment
-from communityapp.services.comment_service import get_comment
+from communityapp.services.comment_service import get_comment, save_comment
 from userapp.models import User
 
 
@@ -14,6 +14,12 @@ class TestCommentService(TestCase):
             "content": "test_content",
             "user": None,
             "category": None
+        }
+
+        self.comment_data = {
+            "user": None,
+            "board": None,
+            "content": "test_content"
         }
 
     def make_user(self):
@@ -50,6 +56,7 @@ class TestCommentService(TestCase):
         self.board_data['user'] = user
         self.board_data['category'] = board_category
         board = self.make_board(**self.board_data)
+
         new_comment = Comment.objects.create(
             user=user,
             board=board,
@@ -63,3 +70,19 @@ class TestCommentService(TestCase):
         # expect
         self.assertEqual(expected_comment['content'], 'test_content')
         self.assertEqual(len(expected_comments), 1)
+
+    def test_save_comment(self):
+        # given
+        user = self.make_user()
+        board_category = self.make_categories()[0]
+        self.board_data['user'] = user
+        self.board_data['category'] = board_category
+        board = self.make_board(**self.board_data)
+
+        self.comment_data['board'] = board.id
+        self.comment_data['user'] = user.id
+        # when
+        comment = save_comment(**self.comment_data)
+
+        # expect
+        self.assertEqual(comment['content'], self.board_data['content'])
