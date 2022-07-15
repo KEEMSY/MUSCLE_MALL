@@ -63,11 +63,12 @@ class CommentApiView(APIView):
         comment = get_comment(request.user.id, comment_id)
         return Response(comment, status=status.HTTP_200_OK)
 
-    def post(self, request):
+    def post(self, request, category_kind, board_id):
         request.data['user'] = request.user.id
-
+        request.data['board'] = board_id
+        request.data['category'] = category_kind
         comment = save_comment(**request.data)
-        return Response({"msg": "post_method"})
+        return Response(comment, status=status.HTTP_201_CREATED)
 
     def put(self, request):
         return Response({"msg": "put_method"})

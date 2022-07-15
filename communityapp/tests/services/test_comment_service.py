@@ -81,8 +81,10 @@ class TestCommentService(TestCase):
 
         self.comment_data['board'] = board.id
         self.comment_data['user'] = user.id
+        self.comment_data['category'] = board_category.kind
+
         # when
-        comment = save_comment(board.id, **self.comment_data)
+        comment = save_comment(**self.comment_data)
 
         # expect
         self.assertEqual(comment['content'], self.board_data['content'])

@@ -8,7 +8,8 @@ urlpatterns = [
 
     # 댓글 조회, 생성, 수정, 삭제
     path('comment/', views.CommentApiView.as_view()),
-    path('comment/<str:comment_id>/', views.CommentApiView.as_view()),
+    path('comment/<int:comment_id>/', views.CommentApiView.as_view()),
+    path('comment/<str:category_kind>/<int:board_id>/', views.CommentApiView.as_view()),
 
     # 게시글 생성
     path('board/', views.BoardApiView.as_view()),
