@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 from communityapp.services.board_category_service import get_board_category, save_board_category, edit_board_category, \
     delete_board_category
 from communityapp.services.board_service import get_board, save_board, edit_board, delete_board
+from communityapp.services.comment_service import get_comment
 
 
 class BoardCategoryApiView(APIView):
@@ -59,6 +60,7 @@ class CommentApiView(APIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get(self, request):
+        comment = get_comment()
         return Response({"msg": "get_method"})
 
     def post(self, request):

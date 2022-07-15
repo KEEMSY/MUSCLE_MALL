@@ -6,8 +6,8 @@ from communityapp.models import Comment
 from communityapp.serializers import CommentSerializer
 
 
-def get_comment(board_id, comment_id=None):
-    comments = Comment.objects.filter(board_id=board_id)
+def get_comment(user_id, comment_id=None):
+    comments = Comment.objects.filter(user_id=user_id)
     if comment_id:
         try:
             target_comment = comments.get(id=comment_id)

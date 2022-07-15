@@ -57,8 +57,8 @@ class TestCommentService(TestCase):
         )
 
         # when
-        expected_comment = get_comment(board.id, new_comment.id)
-        expected_comments = get_comment((board.id))
+        expected_comment = get_comment(user.id, new_comment.id)
+        expected_comments = get_comment((user.id))
 
         # expect
         self.assertEqual(expected_comment['content'], 'test_content')
