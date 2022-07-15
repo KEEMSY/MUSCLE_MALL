@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 from communityapp.services.board_category_service import get_board_category, save_board_category, edit_board_category, \
     delete_board_category
 from communityapp.services.board_service import get_board, save_board, edit_board, delete_board
-from communityapp.services.comment_service import get_comment
+from communityapp.services.comment_service import get_comment, save_comment
 
 
 class BoardCategoryApiView(APIView):
@@ -64,6 +64,9 @@ class CommentApiView(APIView):
         return Response(comment, status=status.HTTP_200_OK)
 
     def post(self, request):
+        request.data['user'] = request.user.id
+
+        comment = save_comment(**request.data)
         return Response({"msg": "post_method"})
 
     def put(self, request):
