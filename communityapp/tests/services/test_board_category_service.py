@@ -10,19 +10,19 @@ class TestBoardCategoryService(TestCase):
     def __init__(self, *args, **kwargs):
         super(TestBoardCategoryService, self).__init__(*args, **kwargs)
         self.board_data = {
-            "kind": "Free",
+            "kind": "free",
             "description": "free_desc"
         }
 
         self.board_update_data = {
-            "kind": "Notice",
+            "kind": "notice",
             "description": "update_desc"
         }
 
     def make_categories(self):
         notice_category = BoardCategory.objects.create(
-            kind="Notice",
-            description='Notice_desc'
+            kind="notice",
+            description='notice_desc'
         )
 
         free_category = BoardCategory.objects.create(
