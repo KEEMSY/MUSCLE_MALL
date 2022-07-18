@@ -13,7 +13,7 @@ class TestCommentService(TestCase):
             "title": "test_title",
             "content": "test_content",
             "user": None,
-            "category": None
+            "category": None,
         }
 
         self.comment_data = {
@@ -25,6 +25,7 @@ class TestCommentService(TestCase):
         self.updtate_comment_data = {
             "content": "update_content"
         }
+
 
     def make_user(self):
         user = User.objects.create(
@@ -39,7 +40,7 @@ class TestCommentService(TestCase):
 
     def make_categories(self):
         notice_category = BoardCategory.objects.create(
-            kind="Notice",
+            kind="notice",
             description='Notice_desc'
         )
 

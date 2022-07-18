@@ -42,14 +42,20 @@ def save_comment(**data):
 def edit_comment(**data):
     try:
         board = Board.objects.get(id=data['board'])
-        comment = Comment.objects.get(id=data['board'], user_id=data['user'])
+        comment = Comment.objects.get(board_id=data['board'], user_id=data['user'])
         comment_serializer = CommentSerializer(comment, data=data, partial=True)
         comment_serializer.is_valid(raise_exception=True)
         comment_serializer.save()
         return comment_serializer.data
 
-    except ObjectDoesNotExist:
+    except Board.DoesNotExist:
         response = {
-            "detail": "해당 게시글/댓글이 존재하지 않습니다.",
+            "detail": "해당 게시글이 존재하지 않습니다."
+        }
+        raise GenericAPIException(status_code=status.HTTP_404_NOT_FOUND, detail=response)
+
+    except Comment.DoesNotExist:
+        response = {
+            "detail": "해당 댓글이 존재하지 않습니다.",
         }
         raise GenericAPIException(status_code=status.HTTP_404_NOT_FOUND, detail=response)
