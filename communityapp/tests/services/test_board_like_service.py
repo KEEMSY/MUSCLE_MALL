@@ -73,7 +73,7 @@ class TestBoardLikeTest(TestCase):
         board_like = save_board_like(user.id, board.id)
 
         # expect
-        with self.assertRaises(ValidationError):
+        with self.assertRaises(GenericAPIException):
             board_like2 = save_board_like(user.id, board.id)
 
     def test_save_board_like_when_board_does_not_exist(self):
