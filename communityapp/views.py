@@ -97,3 +97,15 @@ class BoardLikeApiView(APIView):
     def delete(self, request, board_id):
         board_like = delete_board_like(request.user.id, board_id)
         return Response({"msg": "좋아요가 삭제되었습니다."}, status=status.HTTP_200_OK)
+
+
+class BookmarkBoardApiView(APIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def post(self, request, board_id):
+        board_like = save_board_like(request.user.id, board_id)
+        return Response(board_like, status=status.HTTP_201_CREATED)
+
+    def delete(self, request, board_id):
+        board_like = delete_board_like(request.user.id, board_id)
+        return Response({"msg": "좋아요가 삭제되었습니다."}, status=status.HTTP_200_OK)

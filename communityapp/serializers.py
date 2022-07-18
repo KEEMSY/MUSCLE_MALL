@@ -35,3 +35,16 @@ class BoardLikeSerializer(serializers.ModelSerializer):
     class Meta:
         model = BoardLike
         fields = ['user', 'board', 'created_at', 'updated_at']
+
+
+class BookmarkBoardSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        try:
+            return super().create(validated_data)
+
+        except IntegrityError as error:
+            raise ValidationError from error
+
+    class Meta:
+        model = BoardLike
+        fields = ['user', 'board', 'created_at', 'updated_at']
