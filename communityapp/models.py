@@ -46,3 +46,7 @@ class BoardLike(BaseModel):
     user = models.ForeignKey(User, related_name="like_user", on_delete=models.CASCADE)
     board = models.ForeignKey(Board, related_name="like_board", on_delete=models.CASCADE)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=["user", "board"], name="unique_user_board")
+        ]

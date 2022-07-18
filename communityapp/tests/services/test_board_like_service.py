@@ -1,4 +1,6 @@
+from django.db import IntegrityError
 from django.test import TestCase
+from rest_framework.exceptions import ValidationError
 
 from MM.api_exception import GenericAPIException
 from communityapp.models import BoardCategory, Board, BoardLike
@@ -58,6 +60,21 @@ class TestBoardLikeTest(TestCase):
         # expect
         self.assertEqual(user.id, board_like["user"])
         self.assertEqual(board.id, board_like["board"])
+
+    def test_save_board_like_only_once(self):
+        # give
+        user = self.make_user()
+        board_category = self.make_categories()[0]
+        self.board_data['user'] = user
+        self.board_data['category'] = board_category
+        board = self.make_board(**self.board_data)
+
+        # when
+        board_like = save_board_like(user.id, board.id)
+
+        # expect
+        with self.assertRaises(ValidationError):
+            board_like2 = save_board_like(user.id, board.id)
 
     def test_save_board_like_when_board_does_not_exist(self):
         # give
