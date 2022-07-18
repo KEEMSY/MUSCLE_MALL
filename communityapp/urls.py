@@ -17,7 +17,7 @@ urlpatterns = [
     path('board/<int:board_id>/', views.BoardApiView.as_view()),
 
     # 게시글 좋아요
-    path('board/like/', views.BoardLikeApiView.as_view()),
+    path('board/like/<int:board_id>/', views.BoardLikeApiView.as_view()),
 
     # 카테고리별 게시글 조회
     path('<str:category_kind>/', views.BoardApiView.as_view()),

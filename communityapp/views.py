@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 
 from communityapp.services.board_category_service import get_board_category, save_board_category, edit_board_category, \
     delete_board_category
+from communityapp.services.board_like_service import save_board_like, delete_board_like
 from communityapp.services.board_service import get_board, save_board, edit_board, delete_board
 from communityapp.services.comment_service import get_comment, save_comment, edit_comment, delete_comment
 
@@ -89,8 +90,10 @@ class CommentApiView(APIView):
 class BoardLikeApiView(APIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-    def post(self, request):
-        return Response({"msg": "post method"})
+    def post(self, request, board_id):
+        board_like = save_board_like(request.user.id, board_id)
+        return Response(board_like, status=status.HTTP_201_CREATED)
 
-    def delete(self, request):
-        return Response({"msg": "delete method"})
+    def delete(self, request, board_id):
+        board_like = delete_board_like(request.user.id, board_id)
+        return Response({"msg": "좋아요가 삭제되었습니다."}, status=status.HTTP_200_OK)
