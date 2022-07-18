@@ -82,5 +82,5 @@ class CommentApiView(APIView):
         return Response(comment, status=status.HTTP_200_OK)
 
     def delete(self, request, board_id, comment_id):
-        if delete_comment(comment_id):
+        if delete_comment(board_id, comment_id):
             return Response({"msg": "댓글이 삭제되었습니다."}, status=status.HTTP_200_OK)

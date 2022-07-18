@@ -69,11 +69,18 @@ def edit_comment(**data):
         raise GenericAPIException(status_code=status.HTTP_404_NOT_FOUND, detail=response)
 
 
-def delete_comment(comment_id):
+def delete_comment(board_id, comment_id):
     try:
+        board = Board.objects.get(id=board_id)
         target_comment = Comment.objects.get(id=comment_id)
         target_comment.delete()
         return True
+
+    except Board.DoesNotExist:
+        response = {
+            "detail": "게시글이 존재하지 않습니다.",
+        }
+        raise GenericAPIException(status_code=status.HTTP_404_NOT_FOUND, detail=response)
 
     except Comment.DoesNotExist:
         response = {

@@ -141,7 +141,7 @@ class TestCommentService(TestCase):
         comment = Comment.objects.create(**self.comment_data)
 
         # when
-        delete_comment(comment.id)
+        delete_comment(board.id, comment.id)
 
         # expect
         with self.assertRaises(Comment.DoesNotExist):
