@@ -1,4 +1,5 @@
 from rest_framework import status
+from rest_framework.exceptions import ValidationError
 
 from MM.api_exception import GenericAPIException
 from communityapp.models import BoardLike, Board
@@ -23,6 +24,12 @@ def save_board_like(user_id, board_id):
         }
         raise GenericAPIException(status_code=status.HTTP_404_NOT_FOUND, detail=response)
 
+    except ValidationError:
+        response = {
+            "detail": "좋아요는 게시글 당 한개만 가능합니다."
+        }
+        raise GenericAPIException(status_code=status.HTTP_400_BAD_REQUEST, detail=response)
+
 
 def delete_board_like(user_id, board_id):
     try:
@@ -41,4 +48,3 @@ def delete_board_like(user_id, board_id):
             "detail": "게시글이 존재하지 않습니다."
         }
         raise GenericAPIException(status_code=status.HTTP_404_NOT_FOUND, detail=response)
-
