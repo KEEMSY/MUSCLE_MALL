@@ -94,3 +94,14 @@ class TestBoardLikeTest(TestCase):
         with self.assertRaises(GenericAPIException):
             board_like = delete_board_like(user.id, board_id)
 
+    def test_delete_board_like_when_like_does_not_exist(self):
+        # give
+        user = self.make_user()
+        board_category = self.make_categories()[0]
+        self.board_data['user'] = user
+        self.board_data['category'] = board_category
+        board = self.make_board(**self.board_data)
+
+        # expect
+        with self.assertRaises(GenericAPIException):
+            board_like = delete_board_like(user.id, board.id)
