@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 from communityapp.services.board_category_service import get_board_category, save_board_category, edit_board_category, \
     delete_board_category
 from communityapp.services.board_service import get_board, save_board, edit_board, delete_board
-from communityapp.services.comment_service import get_comment, save_comment
+from communityapp.services.comment_service import get_comment, save_comment, edit_comment, delete_comment
 
 
 class BoardCategoryApiView(APIView):
@@ -59,19 +59,27 @@ class BoardApiView(APIView):
 class CommentApiView(APIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-    def get(self, request, comment_id=None):
-        comment = get_comment(request.user.id, comment_id)
+    def get(self, request, board_id, comment_id=None):
+        info = {
+            "user": request.user.id,
+            "board": board_id,
+            "comment": comment_id
+        }
+        comment = get_comment(info)
         return Response(comment, status=status.HTTP_200_OK)
 
-    def post(self, request, category_kind, board_id):
+    def post(self, request, board_id):
         request.data['user'] = request.user.id
         request.data['board'] = board_id
-        request.data['category'] = category_kind
         comment = save_comment(**request.data)
         return Response(comment, status=status.HTTP_201_CREATED)
 
-    def put(self, request):
-        return Response({"msg": "put_method"})
+    def put(self, request, board_id, comment_id):
+        request.data['user'] = request.user.id
+        request.data['board'] = board_id
+        comment = edit_comment(**request.data)
+        return Response(comment, status=status.HTTP_200_OK)
 
-    def delete(self, request):
-        return Response({"msg": "delete_method"})
+    def delete(self, request, board_id, comment_id):
+        if delete_comment(comment_id):
+            return Response({"msg": "댓글이 삭제되었습니다."}, status=status.HTTP_200_OK)

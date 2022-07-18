@@ -68,13 +68,26 @@ class TestCommentService(TestCase):
             content='test_content'
         )
 
+        new_comment2 = Comment.objects.create(
+            user=user,
+            board=board,
+            content='test_content'
+        )
+
+        info = {
+            "board": board.id,
+            "comment": new_comment.id
+        }
+
         # when
-        expected_comment = get_comment(user.id, new_comment.id)
-        expected_comments = get_comment((user.id))
+        expected_comment = get_comment(info)
+
+        info["comment"] = None
+        expected_comments = get_comment(info)
 
         # expect
         self.assertEqual(expected_comment['content'], 'test_content')
-        self.assertEqual(len(expected_comments), 1)
+        self.assertEqual(len(expected_comments), 2)
 
     def test_save_comment(self):
         # given

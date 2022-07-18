@@ -7,21 +7,29 @@ from communityapp.models import Comment, Board
 from communityapp.serializers import CommentSerializer
 
 
-def get_comment(user_id, comment_id=None):
-    comments = Comment.objects.filter(user_id=user_id)
-    if comment_id:
+def get_comment(info):
+    if info['board']:
         try:
-            target_comment = comments.get(id=comment_id)
-            comment_serializer = CommentSerializer(target_comment)
-            return comment_serializer.data
-        except ObjectDoesNotExist:
+            board = Board.objects.get(id=info['board'])
+            if info['comment']:
+                target_comment = Comment.objects.get(id=info['comment'], board_id=info['board'])
+                comment_serializer = CommentSerializer(target_comment)
+                return comment_serializer.data
+
+            comments_serializer = CommentSerializer(Comment.objects.filter(board_id=info['board']), many=True)
+            return comments_serializer.data
+
+        except Comment.DoesNotExist:
             response = {
-                "detail": "해당 댓글이 존재하지 않습니다.",
+                "detail": "댓글이 존재하지 않습니다.",
             }
             raise GenericAPIException(status_code=status.HTTP_404_NOT_FOUND, detail=response)
 
-    comments_serializer = CommentSerializer(comments, many=True)
-    return comments_serializer.data
+        except Board.DoesNotExist:
+            response = {
+                "detail": "해당 게시글이 존재하지 않습니다.",
+            }
+            raise GenericAPIException(status_code=status.HTTP_404_NOT_FOUND, detail=response)
 
 
 def save_comment(**data):
