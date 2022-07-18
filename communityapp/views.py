@@ -84,3 +84,13 @@ class CommentApiView(APIView):
     def delete(self, request, board_id, comment_id):
         if delete_comment(board_id, comment_id):
             return Response({"msg": "댓글이 삭제되었습니다."}, status=status.HTTP_200_OK)
+
+
+class LikeApiView(APIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def post(self, request):
+        return Response({"msg": "post method"})
+
+    def delete(self, request):
+        return Response({"msg": "delete method"})

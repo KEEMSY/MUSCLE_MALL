@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from communityapp.models import BoardCategory, Board, Comment
+from communityapp.models import BoardCategory, Board, Comment, Like
 
 
 class BoardCategorySerializer(serializers.ModelSerializer):
@@ -20,3 +20,8 @@ class CommentSerializer(serializers.ModelSerializer):
         model = Comment
         fields = ['user', 'board', 'content', 'created_at', 'updated_at']
 
+
+class LikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Like
+        fields = ['user', 'board', 'created_at', 'updated_at']
