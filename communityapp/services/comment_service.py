@@ -59,3 +59,16 @@ def edit_comment(**data):
             "detail": "해당 댓글이 존재하지 않습니다.",
         }
         raise GenericAPIException(status_code=status.HTTP_404_NOT_FOUND, detail=response)
+
+
+def delete_comment(comment_id):
+    try:
+        target_comment = Comment.objects.get(id=comment_id)
+        target_comment.delete()
+        return True
+
+    except Comment.DoesNotExist:
+        response = {
+            "detail": "해당 댓글이 존재하지 않습니다.",
+        }
+        raise GenericAPIException(status_code=status.HTTP_404_NOT_FOUND, detail=response)
