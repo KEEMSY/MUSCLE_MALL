@@ -86,7 +86,7 @@ class CommentApiView(APIView):
             return Response({"msg": "댓글이 삭제되었습니다."}, status=status.HTTP_200_OK)
 
 
-class LikeApiView(APIView):
+class BoardLikeApiView(APIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def post(self, request):

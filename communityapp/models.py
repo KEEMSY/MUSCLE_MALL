@@ -42,7 +42,7 @@ class Comment(BaseModel):
     content = models.CharField(max_length=128, error_messages={'error': '내용이 너무 깁니다.'})
 
 
-class Like(BaseModel):
+class BoardLike(BaseModel):
     user = models.ForeignKey(User, related_name="like_user", on_delete=models.CASCADE)
     board = models.ForeignKey(Board, related_name="like_board", on_delete=models.CASCADE)
 
