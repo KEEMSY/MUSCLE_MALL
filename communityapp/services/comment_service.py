@@ -50,7 +50,7 @@ def save_comment(**data):
 def edit_comment(**data):
     try:
         board = Board.objects.get(id=data['board'])
-        comment = Comment.objects.get(board_id=data['board'], user_id=data['user'])
+        comment = Comment.objects.get(id=data['comment'], user_id=data['user'])
         comment_serializer = CommentSerializer(comment, data=data, partial=True)
         comment_serializer.is_valid(raise_exception=True)
         comment_serializer.save()

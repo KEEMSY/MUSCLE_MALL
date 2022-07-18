@@ -120,6 +120,7 @@ class TestCommentService(TestCase):
 
         self.updtate_comment_data['user'] = user.id
         self.updtate_comment_data['board'] = board.id
+        self.updtate_comment_data['comment'] = comment.id
 
         # when
         update_comment = edit_comment(**self.updtate_comment_data)

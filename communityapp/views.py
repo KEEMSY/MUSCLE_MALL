@@ -77,6 +77,7 @@ class CommentApiView(APIView):
     def put(self, request, board_id, comment_id):
         request.data['user'] = request.user.id
         request.data['board'] = board_id
+        request.data['comment'] = comment_id
         comment = edit_comment(**request.data)
         return Response(comment, status=status.HTTP_200_OK)
 
