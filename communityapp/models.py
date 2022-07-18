@@ -31,8 +31,15 @@ class Board(models.Model):
 
 class Comment(models.Model):
     user = models.ForeignKey(User, related_name="comment_user", on_delete=models.CASCADE)
-    board = models.ForeignKey(Board, related_name="board", on_delete=models.CASCADE)
+    board = models.ForeignKey(Board, related_name="comment_board", on_delete=models.CASCADE)
 
     content = models.CharField(max_length=128, error_messages={'error': '내용이 너무 깁니다.'})
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+class Like(models.Model):
+    user = models.ForeignKey(User, related_name="like_user", on_delete=models.CASCADE)
+    board = models.ForeignKey(Board, related_name="like_board", on_delete=models.CASCADE)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
