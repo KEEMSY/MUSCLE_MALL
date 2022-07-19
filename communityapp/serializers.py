@@ -1,8 +1,7 @@
 from django.db import IntegrityError
-from rest_framework import serializers, status
+from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
-from MM.api_exception import GenericAPIException
 from communityapp.models import BoardCategory, Board, Comment, BoardLike, BoardBookmark
 
 

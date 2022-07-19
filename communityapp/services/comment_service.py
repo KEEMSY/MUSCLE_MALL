@@ -1,5 +1,3 @@
-from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Q
 from rest_framework import status
 
 from MM.api_exception import GenericAPIException
