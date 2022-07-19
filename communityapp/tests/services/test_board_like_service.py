@@ -1,6 +1,4 @@
-from django.db import IntegrityError
 from django.test import TestCase
-from rest_framework.exceptions import ValidationError
 
 from MM.api_exception import GenericAPIException
 from communityapp.models import BoardCategory, Board, BoardLike

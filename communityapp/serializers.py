@@ -3,7 +3,7 @@ from rest_framework import serializers, status
 from rest_framework.exceptions import ValidationError
 
 from MM.api_exception import GenericAPIException
-from communityapp.models import BoardCategory, Board, Comment, BoardLike
+from communityapp.models import BoardCategory, Board, Comment, BoardLike, BoardBookmark
 
 
 class BoardCategorySerializer(serializers.ModelSerializer):
@@ -42,9 +42,9 @@ class BookmarkBoardSerializer(serializers.ModelSerializer):
         try:
             return super().create(validated_data)
 
-        except IntegrityError as error:
-            raise ValidationError from error
+        except IntegrityError:
+            raise ValidationError
 
     class Meta:
-        model = BoardLike
+        model = BoardBookmark
         fields = ['user', 'board', 'created_at', 'updated_at']
