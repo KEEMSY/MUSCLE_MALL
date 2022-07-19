@@ -54,6 +54,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'userapp',
     'productapp',
+    'communityapp',
+
 ]
 
 REST_FRAMEWORK = {
