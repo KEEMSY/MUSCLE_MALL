@@ -19,66 +19,15 @@
 
 <hr>
 
-## 주요기능
-### `userapp`
-`admin`
-- User 등록을 통한 User 관리
-- Coach 등록을 통한 Coach 관리
+## 비즈니스로직 
+[wiki: 각 App 별 기능](https://github.com/KEEMSY/MUSCLE_MALL/wiki)
 <br>
 
-`permission`
-- IsAuthenticatedAndIsAprovedUser 을 통한 권한 설정
-- IsAuthenticatedrIsAdmin를 통한 권한 설정
-<br>
+[`userapp`](https://github.com/KEEMSY/MUSCLE_MALL/wiki/userapp)
 
-`user`
-- 회원가입
-- 회원 승인
-- 회원정보 수정
-- 회원탈퇴
-- (개인)유저조회
-<br>
+[`productapp`](https://github.com/KEEMSY/MUSCLE_MALL/wiki/productapp)
 
-`coach`
-- 코치등록
-- 코치승인
-- 코치정보 수정
-- (개인)코치정보 조회
-
-<hr>
-
-### `productapp`
-`permission`
-- IsAdminOrReadOnly 을 통한 권한 설정
-<br>
-
-`ProductCategory`
-- 대 분류 카테고리 생성, 조회, 수정, 삭제
-- ProductCategorySerializer를 통한 직렬화 
-
-<br>
-
-`ProductDetailCategory`
-- 소 분류 카테고리 생성, 조회, 수정, 삭제
-- ProductDetailCategorySerializer를 통한 직렬화
-
-<br>
-
-`Product`
-- ProductCategory / ProductDetailCategory 에 속하는 product의 생성, 조회, 수정, 삭제
-- ProductSerializer를 통한 직렬화
-<br>
-
-`Routine`
-- IsAuthenticatedOrReadOnly를 통한 권한 설정
-- 원하는 Product 를 담아 Routine 생성, 조회, 수정, 삭제
-- RoutineSerializer를 통한 직렬화
-<br>
-
-`Challenge`
-- 원하는 Product로 구성된 Routine을 통한 Challenge 생성, 조회, 수정, 삭제
-- ChallengeSerializer를 통한 직렬화
-
+[`communityapp`](https://github.com/KEEMSY/MUSCLE_MALL/wiki/communityapp)
 <br>
 
 <hr>
