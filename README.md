@@ -1,9 +1,13 @@
-# DRF-PROJECT: Muscle Mall
-### DRF의 Serializer, Permission을 연습하고 CBV를 사용한 API 작성, TDD 및 CI & CD를 공부하는 프로젝트 입니다. 
-<hr>
+# DRF-PROJECT: Muscle Mall 
 
 ## 소개
-`MM Project` 은 내게 맞는 운동, 식단, 영양 루틴을 구성하거나, 각 분야(운동, 식단, 영양)의 코치들의 루틴을 참고하거나 해당 코치의 지도를 받을 수 있는 서비스 입니다. 
+`MM Project` 은 내게 맞는 `Product`(운동, 식단, 영양 루틴)을 구성하거나, 각 분야(운동, 식단, 영양)의 코치들의 `Challenge`를 참고하거나 해당 코치의 지도를 받을 수 있는 서비스 입니다.  <br>
+
+ <br>
+<p align="center">
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fq0fOn%2FbtrHZDnqA6X%2FzNIrRq6XkDGNRu0W2DrZd1%2Fimg.png" align="center" width="75%"/>
+<p align="center"> MM Project의 시나리오 </p>
+</p>
 
 
 <hr>
@@ -20,7 +24,7 @@
 <hr>
 
 ## 비즈니스로직 
-[wiki: 각 App 별 기능](https://github.com/KEEMSY/MUSCLE_MALL/wiki)
+[wiki](https://github.com/KEEMSY/MUSCLE_MALL/wiki)
 <br>
 
 [`userapp`](https://github.com/KEEMSY/MUSCLE_MALL/wiki/userapp)
