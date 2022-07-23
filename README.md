@@ -5,7 +5,7 @@
 
  <br>
 <p align="center">
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fq0fOn%2FbtrHZDnqA6X%2FzNIrRq6XkDGNRu0W2DrZd1%2Fimg.png" align="center" width="75%"/>
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fq0fOn%2FbtrHZDnqA6X%2FzNIrRq6XkDGNRu0W2DrZd1%2Fimg.png" align="center" width="90%"/>
 <p align="center"> MM Project의 시나리오 </p>
 </p>
 
