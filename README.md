@@ -20,6 +20,13 @@
  <img src="https://img.shields.io/badge/postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white">
   <img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white">
 
+<hr>
+
+## 데이터베이스 
+<p align="center">
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbDSp2S%2FbtrHZ8vRZ6K%2FEoHcM6kaZdVlkrThazpxGk%2Fimg.png" align="center" width="100%"/>
+<p align="center"> MM Project의 ERD </p>
+</p>
 
 <hr>
 
