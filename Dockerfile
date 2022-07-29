@@ -8,4 +8,6 @@ WORKDIR /home/MUSCLE_MALL/
 
 ADD requirements.txt .
 
+RUN pip install -r requirements.txt
+
 CMD ["python", "manage.py", "runserver", "0.0.0.0:5000"]
