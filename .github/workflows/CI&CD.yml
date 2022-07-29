@@ -48,7 +48,7 @@ jobs:
   build-image:
     needs: [ci]
     runs-on: ubuntu-latest
-    if: contains(github.ref, 'main')
+#    if: contains(github.ref, 'main')
 
     steps:
     - name: Set up QEMU
