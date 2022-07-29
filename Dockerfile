@@ -1,6 +1,6 @@
 FROM python:3.9.0
 
-RUN git clone https://github.com/KEEMSY/MUSCLE_MALL.git
+RUN git clone https://github.com/KEEMSY/MUSCLE_MALL.git .
 
 ADD requirements.txt .
 
