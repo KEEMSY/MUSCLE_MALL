@@ -6,10 +6,10 @@ RUN git clone https://github.com/KEEMSY/MUSCLE_MALL.git
 
 WORKDIR /home/MUSCLE_MALL/
 
-ADD requirements.txt .
+COPY requirements.txt ./
 
 RUN pip install -r requirements.txt
 
-ADD ./.env .
+COPY .env ./
 
 CMD ["python", "manage.py", "runserver", "0.0.0.0:5000"]
