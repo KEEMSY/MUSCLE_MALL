@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  django:
+    image: ahr03003/mm-project:latest
+    ports:
+      - "80:5000"
+  mysql:
+    image: mysql:latest
+    volumes:
+      - mysql:/data/db/
+    ports:
+      - "3306:3306"
+volumes:
+  mysql:
