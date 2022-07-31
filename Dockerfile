@@ -10,6 +10,6 @@ ADD requirements.txt .
 
 RUN pip install -r requirements.txt
 
-ADD .env .
+ADD ./.env .
 
 CMD ["python", "manage.py", "runserver", "0.0.0.0:5000"]
